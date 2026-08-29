@@ -1,0 +1,25 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.rod.hold_first_person": {
+			"loop": true,
+			"bones": {
+				"rod": {
+					"rotation": [-48.8604, -9.2318, -189.6882],
+					"position": [4, -2, 1],
+					"scale": 1.2
+				}
+			}
+		},
+		"animation.rod.hold_third_person": {
+			"loop": true,
+			"bones": {
+				"rod": {
+					"position": [0, 0, 0],
+					"rotation": [0, 0, 0],
+					"scale": [1, 1, 1]
+				}
+			}
+		}
+	}
+}

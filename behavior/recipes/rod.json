@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "my:rod_recipe"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:stick"
+      }
+    ],
+    "pattern": [
+      "PPP",
+      "PSP",
+      " S "
+    ],
+    "key": {
+      "P": {
+        "tag": "minecraft:planks"
+      },
+      "S": {
+        "item": "minecraft:stick"
+      }
+    },
+    "result": {
+      "item": "my:rod",
+      "count": 1
+    }
+  }
+}

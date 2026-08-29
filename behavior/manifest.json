@@ -1,0 +1,60 @@
+{
+  "format_version": 2,
+  "header": {
+    "description": "剣と魔法で、新たな冒険へ。\n武器やスキルを駆使して戦い、己を強化しながら世界を探索しよう。",
+    "name": "sword_and_arcana",
+    "uuid": "1a426cbd-78bb-4f5a-8cc0-3a938ab522c4",
+    "version": [
+      1,
+      0,
+      0
+    ],
+    "min_engine_version": [
+      1,
+      21,
+      0
+    ]
+  },
+  "modules": [
+    {
+      "description": "sword_and_arcana",
+      "type": "data",
+      "uuid": "f7cdd058-ceb9-4399-964f-df5214a81391",
+      "version": [
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "description": "sword_and_arcana scripts",
+      "type": "script",
+      "language": "javascript",
+      "uuid": "b005c224-8e0f-449e-86c8-252f8add4f4e",
+      "version": [
+        1,
+        0,
+        0
+      ],
+      "entry": "scripts/main.js"
+    }
+  ],
+  "dependencies": [
+    {
+      "uuid": "e0862ce2-6445-43b5-864b-2e4b28242d8b",
+      "version": [
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "module_name": "@minecraft/server",
+      "version": "2.5.0"
+    },
+    {
+      "module_name": "@minecraft/server-ui",
+      "version": "2.1.0"
+    }
+  ]
+}

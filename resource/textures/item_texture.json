@@ -1,0 +1,11 @@
+{
+  "resource_pack_name": "skills",
+  "texture_data": {
+    "my:rod": {
+      "textures": "textures/items/rod"
+    },
+    "my:skill_book": {
+      "textures": "textures/items/skill_book"
+    }
+  }
+}

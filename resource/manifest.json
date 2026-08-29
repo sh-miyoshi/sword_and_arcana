@@ -1,0 +1,17 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "sword_and_arcana",
+    "description": "剣と魔法で、新たな冒険へ。\n武器やスキルを駆使して戦い、己を強化しながら世界を探索しよう。",
+    "uuid": "e0862ce2-6445-43b5-864b-2e4b28242d8b",
+    "version": [1, 0, 0],
+    "min_engine_version": [1, 21, 0]
+  },
+  "modules": [
+    {
+      "type": "resources",
+      "uuid": "415eb1b9-1268-401f-9e5a-2590e03f0d68",
+      "version": [1, 0, 0]
+    }
+  ]
+}
