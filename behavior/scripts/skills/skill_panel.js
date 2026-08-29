@@ -54,6 +54,7 @@ export function showSkillPanel (player) {
     const points = getSkillPoints(player)
     const healthLevel = getHealthSkill(player)
     const attackLevel = getAttackSkill(player)
+    const magicLevel = getMagicSkill(player)
 
     pointsText.setData(`§eスキルポイント: ${points}`)
     healthText.setData(`§c❤ 体力  Lv ${healthLevel} / ${MAX_SKILL_LEVEL}`)
