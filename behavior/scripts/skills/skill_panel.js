@@ -7,9 +7,11 @@ import {
 import {
   getHealthSkill,
   getAttackSkill,
+  getMagicSkill,
   getSkillPoints,
   upgradeHealthSkill,
   upgradeAttackSkill,
+  upgradeMagicSkill,
   MAX_SKILL_LEVEL
 } from './skill_data.js'
 
@@ -32,13 +34,17 @@ export function showSkillPanel (player) {
     `§f⚔ 攻撃力  Lv ${getAttackSkill(player)} / ${MAX_SKILL_LEVEL}`
   )
 
+  const magicText = new ObservableString(
+    `✦ 魔力  Lv ${getMagicSkill(player)} / ${MAX_SKILL_LEVEL}`
+  )
+
   // -------------------------
   // ボタンの有効/無効
   // -------------------------
 
   const healthButtonDisabled = new ObservableBoolean(!canUpgradeHealth(player))
-
   const attackButtonDisabled = new ObservableBoolean(!canUpgradeAttack(player))
+  const magicButtonDisabled = new ObservableBoolean(!canUpgradeMagic(player))
 
   // -------------------------
   // 表示更新
@@ -50,14 +56,13 @@ export function showSkillPanel (player) {
     const attackLevel = getAttackSkill(player)
 
     pointsText.setData(`§eスキルポイント: ${points}`)
-
     healthText.setData(`§c❤ 体力  Lv ${healthLevel} / ${MAX_SKILL_LEVEL}`)
-
     attackText.setData(`§f⚔ 攻撃力  Lv ${attackLevel} / ${MAX_SKILL_LEVEL}`)
+    magicText.setData(`✦ 魔力  Lv ${magicLevel} / ${MAX_SKILL_LEVEL}`)
 
     healthButtonDisabled.setData(!canUpgradeHealth(player))
-
     attackButtonDisabled.setData(!canUpgradeAttack(player))
+    magicButtonDisabled.setData(!canUpgradeMagic(player))
   }
 
   // -------------------------
@@ -113,6 +118,27 @@ export function showSkillPanel (player) {
 
     .spacer()
 
+    .divider()
+
+    .label(magicText)
+
+    .button(
+      '＋ 魔力を強化',
+      () => {
+        if (!upgradeMagicSkill(player)) {
+          return
+        }
+
+        updateDisplay()
+      },
+      {
+        disabled: magicButtonDisabled,
+        tooltip: 'Lv1でチャージ攻撃を解放します'
+      }
+    )
+
+    .spacer()
+
     .closeButton()
 
   form.show().catch(error => {
@@ -120,16 +146,14 @@ export function showSkillPanel (player) {
   })
 }
 
-/**
- * 体力を強化可能か
- */
 function canUpgradeHealth (player) {
   return getSkillPoints(player) > 0 && getHealthSkill(player) < MAX_SKILL_LEVEL
 }
 
-/**
- * 攻撃力を強化可能か
- */
 function canUpgradeAttack (player) {
   return getSkillPoints(player) > 0 && getAttackSkill(player) < MAX_SKILL_LEVEL
+}
+
+function canUpgradeMagic (player) {
+  return getSkillPoints(player) > 0 && getMagicSkill(player) < MAX_SKILL_LEVEL
 }

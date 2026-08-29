@@ -1,18 +1,14 @@
 import { world, system } from '@minecraft/server'
-
 import { shootChargedEnergyBall } from '../projectiles/charged_energy_ball.js'
-
 import { useMana } from '../player/mana.js'
+import { getMagicSkill } from '../skills/skill_data.js'
 
 const ROD_ID = 'my:rod'
 
-// 20tick = 約1秒
-const CHARGE_REQUIRED_TICKS = 20
+const CHARGE_REQUIRED_TICKS = 20 // 20tick = 約1秒
+const CHARGED_MANA_COST = 2
+const REQUIRED_MAGIC_LEVEL = 1
 
-// チャージ攻撃のMP
-const CHARGED_MANA_COST = 3
-
-// プレイヤーごとのチャージ開始tick
 const chargeStartTicks = new Map()
 
 /**
@@ -26,6 +22,10 @@ world.afterEvents.itemStartUse.subscribe(event => {
   }
 
   const player = event.source
+
+  if (getMagicSkill(player) < REQUIRED_MAGIC_LEVEL) {
+    return
+  }
 
   chargeStartTicks.set(player.id, system.currentTick)
 })
