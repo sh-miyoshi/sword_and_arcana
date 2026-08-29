@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "my:fire_rod_recipe"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "my:rod"
+      }
+    ],
+    "pattern": [
+      " C ",
+      " C ",
+      " R "
+    ],
+    "key": {
+      "C": {
+        "item": "minecraft:fire_charge"
+      },
+      "R": {
+        "item": "my:rod"
+      }
+    },
+    "result": {
+      "item": "my:fire_rod",
+      "count": 1
+    }
+  }
+}
