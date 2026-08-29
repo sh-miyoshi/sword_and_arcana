@@ -1,4 +1,5 @@
 import './weapons/rod.js'
+import './weapons/rod_charge.js'
 import './player/mana.js'
 import './player/health.js'
 import './items/skill_book.js'

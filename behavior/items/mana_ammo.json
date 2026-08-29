@@ -1,0 +1,20 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:item": {
+    "description": {
+      "identifier": "my:mana_ammo"
+    },
+    "components": {
+      "minecraft:max_stack_size": 64,
+      "minecraft:icon": {
+        "textures": {
+          "default": "my:rod"
+        }
+      },
+
+      "minecraft:projectile": {
+        "projectile_entity": "my:energy_ball"
+      }
+    }
+  }
+}
