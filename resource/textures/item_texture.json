@@ -7,6 +7,9 @@
     "my:fire_rod": {
       "textures": "textures/items/fire_rod"
     },
+    "my:ice_rod": {
+      "textures": "textures/items/ice_rod"
+    },
     "my:fire_sword": {
       "textures": "textures/items/fire_sword"
     },
