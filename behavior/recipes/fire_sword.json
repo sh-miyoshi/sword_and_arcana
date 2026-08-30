@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "my:fire_sword_recipe"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:iron_sword"
+      }
+    ],
+    "pattern": [
+      " F ",
+      " F ",
+      " S "
+    ],
+    "key": {
+      "F": {
+        "item": "minecraft:fire_charge"
+      },
+      "S": {
+        "item": "minecraft:iron_sword"
+      }
+    },
+    "result": {
+      "item": "my:fire_sword",
+      "count": 1
+    }
+  }
+}
