@@ -12,7 +12,9 @@ import {
   upgradeHealthSkill,
   upgradeAttackSkill,
   upgradeMagicSkill,
-  MAX_SKILL_LEVEL
+  MAX_SKILL_LEVEL,
+  exchangeExperienceForSkillPoint,
+  SKILL_POINT_LEVEL_COST
 } from './skill_data.js'
 
 import { applyHealthSkill } from '../player/health.js'
@@ -25,6 +27,8 @@ export function showSkillPanel (player) {
   const pointsText = new ObservableString(
     `§eスキルポイント: ${getSkillPoints(player)}`
   )
+
+  const experienceText = new ObservableString(`経験値 Lv ${player.level}`)
 
   const healthText = new ObservableString(
     `§c❤ 体力  Lv ${getHealthSkill(player)} / ${MAX_SKILL_LEVEL}`
@@ -45,6 +49,9 @@ export function showSkillPanel (player) {
   const healthButtonDisabled = new ObservableBoolean(!canUpgradeHealth(player))
   const attackButtonDisabled = new ObservableBoolean(!canUpgradeAttack(player))
   const magicButtonDisabled = new ObservableBoolean(!canUpgradeMagic(player))
+  const exchangeButtonDisabled = new ObservableBoolean(
+    player.level < SKILL_POINT_LEVEL_COST
+  )
 
   // -------------------------
   // 表示更新
@@ -57,6 +64,7 @@ export function showSkillPanel (player) {
     const magicLevel = getMagicSkill(player)
 
     pointsText.setData(`§eスキルポイント: ${points}`)
+    experienceText.setData(`経験値 Lv ${player.level}`)
     healthText.setData(`§c❤ 体力  Lv ${healthLevel} / ${MAX_SKILL_LEVEL}`)
     attackText.setData(`§f⚔ 攻撃力  Lv ${attackLevel} / ${MAX_SKILL_LEVEL}`)
     magicText.setData(`✦ 魔力  Lv ${magicLevel} / ${MAX_SKILL_LEVEL}`)
@@ -64,6 +72,7 @@ export function showSkillPanel (player) {
     healthButtonDisabled.setData(!canUpgradeHealth(player))
     attackButtonDisabled.setData(!canUpgradeAttack(player))
     magicButtonDisabled.setData(!canUpgradeMagic(player))
+    exchangeButtonDisabled.setData(player.level < SKILL_POINT_LEVEL_COST)
   }
 
   // -------------------------
@@ -72,11 +81,25 @@ export function showSkillPanel (player) {
 
   const form = new CustomForm(player, '§lスキル')
     .header(pointsText)
+    .spacer()
+    .label(experienceText)
+    .button(
+      `経験値Lv${SKILL_POINT_LEVEL_COST} → スキルポイント+1`,
+      () => {
+        if (!exchangeExperienceForSkillPoint(player)) {
+          return
+        }
 
+        updateDisplay()
+      },
+      {
+        disabled: exchangeButtonDisabled,
+        tooltip: `経験値レベルを${SKILL_POINT_LEVEL_COST}消費します`
+      }
+    )
     .divider()
 
     .label(healthText)
-
     .button(
       '＋ 体力を強化',
       () => {
@@ -95,13 +118,10 @@ export function showSkillPanel (player) {
         tooltip: '体力スキルを1上げます'
       }
     )
-
     .spacer()
-
     .divider()
 
     .label(attackText)
-
     .button(
       '＋ 攻撃力を強化',
       () => {
@@ -116,13 +136,10 @@ export function showSkillPanel (player) {
         tooltip: '攻撃力スキルを1上げます'
       }
     )
-
     .spacer()
-
     .divider()
 
     .label(magicText)
-
     .button(
       '＋ 魔力を強化',
       () => {
@@ -137,9 +154,7 @@ export function showSkillPanel (player) {
         tooltip: 'Lv1でチャージ攻撃を解放します'
       }
     )
-
     .spacer()
-
     .closeButton()
 
   form.show().catch(error => {

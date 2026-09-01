@@ -4,6 +4,7 @@ const MAGIC_SKILL_PROPERTY = 'my:skill_magic'
 const SKILL_POINTS_PROPERTY = 'my:skill_points'
 
 export const MAX_SKILL_LEVEL = 20
+export const SKILL_POINT_LEVEL_COST = 3
 
 function getNumber (player, property, defaultValue = 0) {
   const value = player.getDynamicProperty(property)
@@ -34,6 +35,12 @@ export function getSkillPoints (player) {
 
 export function setSkillPoints (player, amount) {
   player.setDynamicProperty(SKILL_POINTS_PROPERTY, Math.max(0, amount))
+}
+
+export function addSkillPoints (player, amount) {
+  const points = getSkillPoints(player)
+
+  setSkillPoints(player, points + amount)
 }
 
 /**
@@ -104,4 +111,14 @@ export function resetSkills (player) {
   player.setDynamicProperty(ATTACK_SKILL_PROPERTY, 0)
   player.setDynamicProperty(MAGIC_SKILL_PROPERTY, 0)
   player.setDynamicProperty(SKILL_POINTS_PROPERTY, 5)
+}
+
+export function exchangeExperienceForSkillPoint (player) {
+  if (player.level < SKILL_POINT_LEVEL_COST) {
+    return false
+  }
+
+  player.addLevels(-SKILL_POINT_LEVEL_COST)
+  addSkillPoints(player, 1)
+  return true
 }
