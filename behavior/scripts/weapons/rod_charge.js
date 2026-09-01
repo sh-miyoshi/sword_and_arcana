@@ -92,17 +92,10 @@ system.runInterval(() => {
     }
 
     const chargedTicks = system.currentTick - startTick
-
     const ratio = Math.min(chargedTicks / CHARGE_REQUIRED_TICKS, 1)
-
     const filled = Math.floor(ratio * 10)
-
     const gauge = '■'.repeat(filled) + '□'.repeat(10 - filled)
 
-    if (ratio >= 1) {
-      player.onScreenDisplay.setActionBar(`[${gauge}] CHARGED!`)
-    } else {
-      player.onScreenDisplay.setActionBar(`[${gauge}]`)
-    }
+    player.onScreenDisplay.setActionBar(`[${gauge}]`)
   }
 }, 2)
