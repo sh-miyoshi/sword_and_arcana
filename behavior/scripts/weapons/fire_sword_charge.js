@@ -1,10 +1,16 @@
-import { world, system } from '@minecraft/server'
+import { EntityDamageCause, world, system } from '@minecraft/server'
 
 import { useMana } from '../player/mana.js'
 
 const FIRE_SWORD_ID = 'my:fire_sword'
 const CHARGE_REQUIRED_TICKS = 20
-const CHARGED_MANA_COST = 3
+const CHARGED_MANA_COST = 1
+const CHARGED_ATTACK_DAMAGE = 8
+const HIT_RANGE = 5
+const HIT_HALF_ANGLE = 70
+const HIT_MIN_HEIGHT = -1.5
+const HIT_MAX_HEIGHT = 2.5
+const DEBUG_HITBOX = true
 const chargeStartTicks = new Map()
 
 system.beforeEvents.startup.subscribe(event => {
@@ -104,9 +110,9 @@ function spawnFireSlash (player, forward) {
   const dimension = player.dimension
   const origin = player.location
 
-  // プレイヤーの前方2.5ブロックを中心にする
-  const centerX = origin.x + forward.x * 2.5
-  const centerZ = origin.z + forward.z * 2.5
+  // プレイヤーの前方3.5ブロックを中心にする
+  const centerX = origin.x + forward.x * 3.5
+  const centerZ = origin.z + forward.z * 3.5
 
   // 横方向ベクトル
   const right = {
@@ -115,15 +121,15 @@ function spawnFireSlash (player, forward) {
   }
 
   // -70度 ～ +70度
-  for (let angle = -70; angle <= 70; angle += 10) {
+  for (let angle = -70; angle <= 70; angle += 7) {
     const rad = (angle * Math.PI) / 180
 
     // 半径
-    const radius = 2.2
+    const radius = 3.5
 
     // 半月の形
     const side = Math.sin(rad) * radius
-    const front = Math.cos(rad) * 0.8
+    const front = Math.cos(rad) * 1.2
 
     const particlePos = {
       x: centerX + right.x * side + forward.x * front,
@@ -134,5 +140,94 @@ function spawnFireSlash (player, forward) {
     }
 
     dimension.spawnParticle('minecraft:basic_flame_particle', particlePos)
+  }
+
+  const targets = getFireSlashTargets(player, forward)
+
+  for (const target of targets) {
+    target.applyDamage(CHARGED_ATTACK_DAMAGE, {
+      cause: EntityDamageCause.entityAttack,
+      damagingEntity: player
+    })
+
+    if (DEBUG_HITBOX) {
+      const targetLocation = target.location
+
+      dimension.spawnParticle('minecraft:critical_hit_emitter', {
+        x: targetLocation.x,
+        y: targetLocation.y + 1,
+        z: targetLocation.z
+      })
+    }
+  }
+
+  if (DEBUG_HITBOX) {
+    showFireSlashHitbox(player, forward)
+    player.sendMessage(`炎斬撃の命中数: ${targets.length}`)
+  }
+}
+
+function getFireSlashTargets (player, forward) {
+  const origin = player.location
+  const minimumDot = Math.cos((HIT_HALF_ANGLE * Math.PI) / 180)
+
+  return player.dimension
+    .getEntities({
+      location: origin,
+      maxDistance: HIT_RANGE
+    })
+    .filter(target => {
+      if (target.id === player.id || target.typeId === 'minecraft:item') {
+        return false
+      }
+
+      const offsetX = target.location.x - origin.x
+      const offsetY = target.location.y - origin.y
+      const offsetZ = target.location.z - origin.z
+
+      if (offsetY < HIT_MIN_HEIGHT || offsetY > HIT_MAX_HEIGHT) {
+        return false
+      }
+
+      const horizontalDistance = Math.sqrt(
+        offsetX * offsetX + offsetZ * offsetZ
+      )
+
+      if (horizontalDistance === 0 || horizontalDistance > HIT_RANGE) {
+        return false
+      }
+
+      const directionDot =
+        (offsetX * forward.x + offsetZ * forward.z) / horizontalDistance
+
+      return directionDot >= minimumDot
+    })
+}
+
+function showFireSlashHitbox (player, forward) {
+  const dimension = player.dimension
+  const origin = player.location
+  const right = {
+    x: -forward.z,
+    z: forward.x
+  }
+
+  for (let distance = 1; distance <= HIT_RANGE; distance += 1) {
+    for (let angle = -HIT_HALF_ANGLE; angle <= HIT_HALF_ANGLE; angle += 14) {
+      const rad = (angle * Math.PI) / 180
+      const debugPosition = {
+        x:
+          origin.x +
+          forward.x * Math.cos(rad) * distance +
+          right.x * Math.sin(rad) * distance,
+        y: origin.y + 0.15,
+        z:
+          origin.z +
+          forward.z * Math.cos(rad) * distance +
+          right.z * Math.sin(rad) * distance
+      }
+
+      dimension.spawnParticle('minecraft:basic_flame_particle', debugPosition)
+    }
   }
 }
