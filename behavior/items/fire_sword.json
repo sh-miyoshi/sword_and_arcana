@@ -1,5 +1,5 @@
 {
-  "format_version": "1.20.50",
+  "format_version": "1.26.30",
   "minecraft:item": {
     "description": {
       "identifier": "my:fire_sword"
@@ -15,10 +15,11 @@
       "minecraft:durability": {
         "max_durability": 500
       },
-      "minecraft:enchantable": {
-        "slot": "sword",
-        "value": 10
-      }
+      "minecraft:use_modifiers": {
+        "use_duration": 1.5,
+        "movement_modifier": 0.5
+      },
+      "my:fire_sword_charge": {}
     }
   }
 }
