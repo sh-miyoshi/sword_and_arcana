@@ -1,4 +1,4 @@
-import { world, system } from '@minecraft/server'
+import { EquipmentSlot, world, system } from '@minecraft/server'
 
 import { shootChargedEnergyBall } from '../projectiles/charged_energy_ball.js'
 import { useMana } from '../player/mana.js'
@@ -57,15 +57,20 @@ system.runInterval(() => {
       continue
     }
 
+    const equippable = player.getComponent('minecraft:equippable')
+    const heldItem = equippable?.getEquipment(EquipmentSlot.Mainhand)
+
+    if (!heldItem || heldItem.typeId !== FIRE_ROD_ID) {
+      chargeStartTicks.delete(player.id)
+      player.onScreenDisplay.setActionBar('')
+      continue
+    }
+
     const chargedTicks = system.currentTick - startTick
     const ratio = Math.min(chargedTicks / CHARGE_REQUIRED_TICKS, 1)
     const filled = Math.floor(ratio * 10)
     const gauge = '■'.repeat(filled) + '□'.repeat(10 - filled)
 
-    if (ratio >= 1) {
-      player.onScreenDisplay.setActionBar(`[${gauge}] CHARGED!`)
-    } else {
-      player.onScreenDisplay.setActionBar(`[${gauge}]`)
-    }
+    player.onScreenDisplay.setActionBar(`[${gauge}]`)
   }
 }, 2)

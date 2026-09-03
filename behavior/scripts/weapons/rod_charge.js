@@ -1,4 +1,4 @@
-import { world, system } from '@minecraft/server'
+import { EquipmentSlot, world, system } from '@minecraft/server'
 import { shootChargedEnergyBall } from '../projectiles/charged_energy_ball.js'
 import { useMana } from '../player/mana.js'
 import { getMagicSkill } from '../skills/skill_data.js'
@@ -88,6 +88,15 @@ system.runInterval(() => {
     const startTick = chargeStartTicks.get(player.id)
 
     if (startTick === undefined) {
+      continue
+    }
+
+    const equippable = player.getComponent('minecraft:equippable')
+    const heldItem = equippable?.getEquipment(EquipmentSlot.Mainhand)
+
+    if (!heldItem || heldItem.typeId !== ROD_ID) {
+      chargeStartTicks.delete(player.id)
+      player.onScreenDisplay.setActionBar('')
       continue
     }
 

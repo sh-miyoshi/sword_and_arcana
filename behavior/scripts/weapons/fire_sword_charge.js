@@ -1,4 +1,9 @@
-import { EntityDamageCause, world, system } from '@minecraft/server'
+import {
+  EntityDamageCause,
+  EquipmentSlot,
+  world,
+  system
+} from '@minecraft/server'
 
 import { useMana } from '../player/mana.js'
 
@@ -10,7 +15,7 @@ const HIT_RANGE = 5
 const HIT_HALF_ANGLE = 70
 const HIT_MIN_HEIGHT = -1.5
 const HIT_MAX_HEIGHT = 2.5
-const DEBUG_HITBOX = true
+const DEBUG_HITBOX = false
 const chargeStartTicks = new Map()
 
 system.beforeEvents.startup.subscribe(event => {
@@ -75,16 +80,21 @@ system.runInterval(() => {
       continue
     }
 
+    const equippable = player.getComponent('minecraft:equippable')
+    const heldItem = equippable?.getEquipment(EquipmentSlot.Mainhand)
+
+    if (!heldItem || heldItem.typeId !== FIRE_SWORD_ID) {
+      chargeStartTicks.delete(player.id)
+      player.onScreenDisplay.setActionBar('')
+      continue
+    }
+
     const chargedTicks = system.currentTick - startTick
     const ratio = Math.min(chargedTicks / CHARGE_REQUIRED_TICKS, 1)
     const filled = Math.floor(ratio * 10)
     const gauge = '■'.repeat(filled) + '□'.repeat(10 - filled)
 
-    if (ratio >= 1) {
-      player.onScreenDisplay.setActionBar(`[${gauge}] CHARGED!`)
-    } else {
-      player.onScreenDisplay.setActionBar(`[${gauge}]`)
-    }
+    player.onScreenDisplay.setActionBar(`[${gauge}]`)
   }
 }, 2)
 
@@ -150,15 +160,13 @@ function spawnFireSlash (player, forward) {
       damagingEntity: player
     })
 
-    if (DEBUG_HITBOX) {
-      const targetLocation = target.location
+    const targetLocation = target.location
 
-      dimension.spawnParticle('minecraft:critical_hit_emitter', {
-        x: targetLocation.x,
-        y: targetLocation.y + 1,
-        z: targetLocation.z
-      })
-    }
+    dimension.spawnParticle('minecraft:critical_hit_emitter', {
+      x: targetLocation.x,
+      y: targetLocation.y + 1,
+      z: targetLocation.z
+    })
   }
 
   if (DEBUG_HITBOX) {
