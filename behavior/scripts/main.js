@@ -8,6 +8,7 @@ import './weapons/fire_sword_charge.js'
 import './player/mana.js'
 import './player/health.js'
 import './items/skill_book.js'
+import './items/mana_berry.js'
 
 import { system, Player } from '@minecraft/server'
 

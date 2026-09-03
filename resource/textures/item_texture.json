@@ -15,6 +15,9 @@
     },
     "my:skill_book": {
       "textures": "textures/items/skill_book"
+    },
+    "my:mana_berry": {
+      "textures": "textures/items/mana_berry"
     }
   }
 }
