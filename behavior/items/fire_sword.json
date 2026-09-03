@@ -16,7 +16,7 @@
         "max_durability": 500
       },
       "minecraft:use_modifiers": {
-        "use_duration": 1.5,
+        "use_duration": 9999,
         "movement_modifier": 0.5
       },
       "my:fire_sword_charge": {}

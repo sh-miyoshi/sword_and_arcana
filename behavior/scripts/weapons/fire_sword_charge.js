@@ -1,16 +1,86 @@
-import { system } from '@minecraft/server'
+import { world, system } from '@minecraft/server'
+
+import { useMana } from '../player/mana.js'
+
+const FIRE_SWORD_ID = 'my:fire_sword'
+const CHARGE_REQUIRED_TICKS = 20
+const CHARGED_MANA_COST = 3
+const chargeStartTicks = new Map()
 
 system.beforeEvents.startup.subscribe(event => {
   event.itemComponentRegistry.registerCustomComponent('my:fire_sword_charge', {
     onCompleteUse (event) {
-      const player = event.source
-
-      system.run(() => {
-        fireSwordChargeAttack(player)
-      })
+      finishCharge(event.source)
     }
   })
 })
+
+world.afterEvents.itemStartUse.subscribe(event => {
+  const item = event.itemStack
+
+  if (!item || item.typeId !== FIRE_SWORD_ID) {
+    return
+  }
+
+  chargeStartTicks.set(event.source.id, system.currentTick)
+})
+
+world.afterEvents.itemReleaseUse.subscribe(event => {
+  const item = event.itemStack
+
+  if (!item || item.typeId !== FIRE_SWORD_ID) {
+    return
+  }
+
+  finishCharge(event.source)
+})
+
+function finishCharge (player) {
+  const startTick = chargeStartTicks.get(player.id)
+
+  chargeStartTicks.delete(player.id)
+  player.onScreenDisplay.setActionBar('')
+
+  if (startTick === undefined) {
+    return
+  }
+
+  const chargedTicks = system.currentTick - startTick
+
+  if (chargedTicks < CHARGE_REQUIRED_TICKS) {
+    return
+  }
+
+  if (!useMana(player, CHARGED_MANA_COST)) {
+    player.sendMessage('MPが足りません。')
+    return
+  }
+
+  system.run(() => {
+    fireSwordChargeAttack(player)
+  })
+}
+
+system.runInterval(() => {
+  for (const player of world.getAllPlayers()) {
+    const startTick = chargeStartTicks.get(player.id)
+
+    if (startTick === undefined) {
+      continue
+    }
+
+    const chargedTicks = system.currentTick - startTick
+    const ratio = Math.min(chargedTicks / CHARGE_REQUIRED_TICKS, 1)
+    const filled = Math.floor(ratio * 10)
+    const gauge = '■'.repeat(filled) + '□'.repeat(10 - filled)
+
+    if (ratio >= 1) {
+      player.onScreenDisplay.setActionBar(`[${gauge}] CHARGED!`)
+    } else {
+      player.onScreenDisplay.setActionBar(`[${gauge}]`)
+    }
+  }
+}, 2)
 
 function fireSwordChargeAttack (player) {
   const view = player.getViewDirection()
