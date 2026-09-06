@@ -3,7 +3,7 @@ const ATTACK_SKILL_PROPERTY = 'my:skill_attack'
 const MAGIC_SKILL_PROPERTY = 'my:skill_magic'
 const SKILL_POINTS_PROPERTY = 'my:skill_points'
 
-export const MAX_SKILL_LEVEL = 20
+export const MAX_SKILL_LEVEL = 10
 export const SKILL_POINT_LEVEL_COST = 3
 
 function getNumber (player, property, defaultValue = 0) {

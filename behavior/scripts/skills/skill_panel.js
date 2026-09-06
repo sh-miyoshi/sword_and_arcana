@@ -18,6 +18,7 @@ import {
 } from './skill_data.js'
 
 import { applyHealthSkill } from '../player/health.js'
+import { restoreMana } from '../player/mana.js'
 
 export function showSkillPanel (player) {
   // -------------------------
@@ -147,6 +148,7 @@ export function showSkillPanel (player) {
           return
         }
 
+        restoreMana(player, 1)
         updateDisplay()
       },
       {

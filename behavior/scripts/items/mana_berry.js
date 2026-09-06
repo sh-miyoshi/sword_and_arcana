@@ -1,6 +1,6 @@
 import { system, world, ItemStack } from '@minecraft/server'
 
-import { MAX_MANA, setMana } from '../player/mana.js'
+import { getMaxMana, setMana } from '../player/mana.js'
 
 // 魔力の実を使用した時の処理
 system.beforeEvents.startup.subscribe(event => {
@@ -9,7 +9,7 @@ system.beforeEvents.startup.subscribe(event => {
       const player = event.source
 
       system.run(() => {
-        setMana(player, MAX_MANA)
+        setMana(player, getMaxMana(player))
         player.sendMessage('§bMPが最大まで回復しました。')
       })
     }
