@@ -4,7 +4,7 @@
     "type": "panel",
     "size": [
       166,
-      8
+      20
     ],
     "anchor_from": "bottom_middle",
     "anchor_to": "bottom_middle",
@@ -13,6 +13,42 @@
       -60
     ],
     "controls": [
+      {
+        "mana_debug_label": {
+          "type": "label",
+          "text": "MP",
+          "offset": [
+            -42,
+            -10
+          ],
+          "color": [
+            0.7,
+            0.65,
+            1
+          ],
+          "shadow": true,
+          "layer": 12
+        }
+      },
+      {
+        "charge_debug_label": {
+          "type": "label",
+          "text": "Charge",
+          "offset": [
+            42,
+            -10
+          ],
+          "color": [
+            1,
+            0.7,
+            0.25
+          ],
+          "shadow": true,
+          "$atext": "$actionbar_text",
+          "visible": "(not (($atext - 'C_ON') = $atext))",
+          "layer": 12
+        }
+      },
       {
         "mana_background": {
           "type": "image",
