@@ -1,49 +1,37 @@
-import {
-    world,
-    system
-} from "@minecraft/server";
+import { world, system } from '@minecraft/server'
 
-const MANA_PROPERTY = "my:mana";
+const MANA_PROPERTY = 'my:mana'
 
-export const MAX_MANA = 5;
-export const MANA_REGEN_AMOUNT = 1;
-export const MANA_REGEN_INTERVAL = 100; // 20tick = 約1秒
-export const MANA_DISPLAY_INTERVAL = 10;
+export const MAX_MANA = 5
+export const MANA_REGEN_AMOUNT = 1
+export const MANA_REGEN_INTERVAL = 100 // 20tick = 約1秒
+export const MANA_DISPLAY_INTERVAL = 10
 
 /**
  * MPを取得する
  */
-export function getMana(player) {
-    const mana = player.getDynamicProperty(MANA_PROPERTY);
+export function getMana (player) {
+  const mana = player.getDynamicProperty(MANA_PROPERTY)
 
-    // まだMPが設定されていない場合
-    if (typeof mana !== "number") {
-        player.setDynamicProperty(MANA_PROPERTY, MAX_MANA);
-        return MAX_MANA;
-    }
+  // まだMPが設定されていない場合
+  if (typeof mana !== 'number') {
+    player.setDynamicProperty(MANA_PROPERTY, MAX_MANA)
+    return MAX_MANA
+  }
 
-    return mana;
+  return mana
 }
-
 
 /**
  * MPを設定する
  */
-export function setMana(player, amount) {
-    // 0～MAX_MANAの範囲に収める
-    const newMana = Math.max(
-        0,
-        Math.min(MAX_MANA, amount)
-    );
+export function setMana (player, amount) {
+  // 0～MAX_MANAの範囲に収める
+  const newMana = Math.max(0, Math.min(MAX_MANA, amount))
 
-    player.setDynamicProperty(
-        MANA_PROPERTY,
-        newMana
-    );
-
-    showMana(player);
+  player.setDynamicProperty(MANA_PROPERTY, newMana)
+  updateManaHud(player)
 }
-
 
 /**
  * MPを消費する
@@ -51,85 +39,65 @@ export function setMana(player, amount) {
  * 消費できた場合 true
  * MP不足の場合 false
  */
-export function useMana(player, amount) {
-    const mana = getMana(player);
+export function useMana (player, amount) {
+  const mana = getMana(player)
 
-    if (mana < amount) {
-        return false;
-    }
+  if (mana < amount) {
+    return false
+  }
 
-    setMana(
-        player,
-        mana - amount
-    );
+  setMana(player, mana - amount)
 
-    return true;
+  return true
 }
-
 
 /**
  * MPを回復する
  */
-export function restoreMana(player, amount) {
-    const mana = getMana(player);
+export function restoreMana (player, amount) {
+  const mana = getMana(player)
 
-    setMana(
-        player,
-        mana + amount
-    );
+  setMana(player, mana + amount)
 }
 
+function updateManaHud (player) {
+  const mana = getMana(player)
+  const maxMana = MAX_MANA
 
-/**
- * 画面にMPを表示する
- */
-export function showMana(player) {
-    const mana = getMana(player);
+  const ratio = maxMana <= 0 ? 0 : Math.max(0, Math.min(1, mana / maxMana))
 
-    player.onScreenDisplay.setActionBar(
-        `§bMP: ${mana} / ${MAX_MANA}`
-    );
+  const step = Math.round(ratio * 10)
+
+  const manaCode = `M${String(step).padStart(2, '0')}`
+
+  player.onScreenDisplay.setActionBar(manaCode)
 }
-
 
 /**
  * プレイヤーがワールドに入ったときに初期化
  */
-world.afterEvents.playerSpawn.subscribe((event) => {
-    const player = event.player;
+world.afterEvents.playerSpawn.subscribe(event => {
+  const player = event.player
 
-    getMana(player);
-    showMana(player);
-});
-
+  getMana(player)
+  updateManaHud(player)
+})
 
 /**
  * MP回復
  */
 system.runInterval(() => {
+  for (const player of world.getAllPlayers()) {
+    const mana = getMana(player)
 
-    for (const player of world.getAllPlayers()) {
-
-        const mana = getMana(player);
-
-        if (mana < MAX_MANA) {
-            restoreMana(
-                player,
-                MANA_REGEN_AMOUNT
-            );
-        }
+    if (mana < MAX_MANA) {
+      restoreMana(player, MANA_REGEN_AMOUNT)
     }
+  }
+}, MANA_REGEN_INTERVAL)
 
-}, MANA_REGEN_INTERVAL);
-
-/**
- * ActionBar表示更新
- *
- */
 system.runInterval(() => {
-
-    for (const player of world.getAllPlayers()) {
-        showMana(player);
-    }
-
-}, MANA_DISPLAY_INTERVAL);
+  for (const player of world.getAllPlayers()) {
+    updateManaHud(player)
+  }
+}, MANA_DISPLAY_INTERVAL)

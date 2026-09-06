@@ -1,0 +1,135 @@
+{
+  "namespace": "hud",
+  "mana_hud": {
+    "type": "panel",
+    "size": [
+      82,
+      8
+    ],
+    "anchor_from": "bottom_middle",
+    "anchor_to": "bottom_middle",
+    "offset": [
+      0,
+      -58
+    ],
+    "controls": [
+      {
+        "mana_background": {
+          "type": "image",
+          "texture": "textures/ui/White",
+          "size": [
+            82,
+            8
+          ],
+          "color": [
+            0.08,
+            0.08,
+            0.12
+          ],
+          "alpha": 0.9,
+          "keep_ratio": false,
+          "layer": 10
+        }
+      },
+      {
+        "mana_fill": {
+          "type": "image",
+          "texture": "textures/ui/White",
+          "size": [
+            80,
+            6
+          ],
+          "anchor_from": "left_middle",
+          "anchor_to": "left_middle",
+          "offset": [
+            1,
+            0
+          ],
+          "color": [
+            0.45,
+            0.2,
+            0.8
+          ],
+          "keep_ratio": false,
+          "clip_direction": "left",
+          "clip_pixelperfect": false,
+          "$atext": "$actionbar_text",
+          "$mana_ratio|default": 1,
+          "variables": [
+            {
+              "requires": "($atext = 'M00')",
+              "$mana_ratio": 1
+            },
+            {
+              "requires": "($atext = 'M01')",
+              "$mana_ratio": 0.9
+            },
+            {
+              "requires": "($atext = 'M02')",
+              "$mana_ratio": 0.8
+            },
+            {
+              "requires": "($atext = 'M03')",
+              "$mana_ratio": 0.7
+            },
+            {
+              "requires": "($atext = 'M04')",
+              "$mana_ratio": 0.6
+            },
+            {
+              "requires": "($atext = 'M05')",
+              "$mana_ratio": 0.5
+            },
+            {
+              "requires": "($atext = 'M06')",
+              "$mana_ratio": 0.4
+            },
+            {
+              "requires": "($atext = 'M07')",
+              "$mana_ratio": 0.3
+            },
+            {
+              "requires": "($atext = 'M08')",
+              "$mana_ratio": 0.2
+            },
+            {
+              "requires": "($atext = 'M09')",
+              "$mana_ratio": 0.1
+            },
+            {
+              "requires": "($atext = 'M10')",
+              "$mana_ratio": 0
+            }
+          ],
+          "clip_ratio": "$mana_ratio",
+          "layer": 11
+        }
+      }
+    ]
+  },
+  "mana_actionbar_factory": {
+    "type": "panel",
+    "factory": {
+      "name": "hud_actionbar_text_factory",
+      "control_ids": {
+        "hud_actionbar_text": "mana_hud@hud.mana_hud"
+      }
+    }
+  },
+  "root_panel": {
+    "modifications": [
+      {
+        "array_name": "controls",
+        "operation": "insert_front",
+        "value": [
+          {
+            "mana_actionbar_factory@hud.mana_actionbar_factory": {}
+          }
+        ]
+      }
+    ]
+  },
+  "hud_actionbar_text": {
+    "visible": false
+  }
+}
