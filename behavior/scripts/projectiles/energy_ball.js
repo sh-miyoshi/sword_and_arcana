@@ -51,4 +51,6 @@ export function shootEnergyBall (player) {
       ball.remove()
     }
   }, LIFETIME)
+
+  return ball
 }
