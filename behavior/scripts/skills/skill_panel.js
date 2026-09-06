@@ -32,11 +32,11 @@ export function showSkillPanel (player) {
   const experienceText = new ObservableString(`経験値 Lv ${player.level}`)
 
   const healthText = new ObservableString(
-    `§c❤ 体力  Lv ${getHealthSkill(player)} / ${MAX_SKILL_LEVEL}`
+    `❤ 体力  Lv ${getHealthSkill(player)} / ${MAX_SKILL_LEVEL}`
   )
 
   const attackText = new ObservableString(
-    `§f⚔ 攻撃力  Lv ${getAttackSkill(player)} / ${MAX_SKILL_LEVEL}`
+    `⚔ 攻撃力  Lv ${getAttackSkill(player)} / ${MAX_SKILL_LEVEL}`
   )
 
   const magicText = new ObservableString(
@@ -66,8 +66,8 @@ export function showSkillPanel (player) {
 
     pointsText.setData(`§eスキルポイント: ${points}`)
     experienceText.setData(`経験値 Lv ${player.level}`)
-    healthText.setData(`§c❤ 体力  Lv ${healthLevel} / ${MAX_SKILL_LEVEL}`)
-    attackText.setData(`§f⚔ 攻撃力  Lv ${attackLevel} / ${MAX_SKILL_LEVEL}`)
+    healthText.setData(`❤ 体力  Lv ${healthLevel} / ${MAX_SKILL_LEVEL}`)
+    attackText.setData(`⚔ 攻撃力  Lv ${attackLevel} / ${MAX_SKILL_LEVEL}`)
     magicText.setData(`✦ 魔力  Lv ${magicLevel} / ${MAX_SKILL_LEVEL}`)
 
     healthButtonDisabled.setData(!canUpgradeHealth(player))
@@ -116,7 +116,7 @@ export function showSkillPanel (player) {
       },
       {
         disabled: healthButtonDisabled,
-        tooltip: '体力スキルを1上げます'
+        tooltip: '体力スキルを1上げます。'
       }
     )
     .spacer()
@@ -134,7 +134,8 @@ export function showSkillPanel (player) {
       },
       {
         disabled: attackButtonDisabled,
-        tooltip: '攻撃力スキルを1上げます'
+        tooltip:
+          '攻撃力スキルを1上げます。一定以上のレベルでソードのチャージ速度が上昇します。'
       }
     )
     .spacer()
@@ -153,7 +154,8 @@ export function showSkillPanel (player) {
       },
       {
         disabled: magicButtonDisabled,
-        tooltip: 'Lv1でチャージ攻撃を解放します'
+        tooltip:
+          '最大MPを1増やします。一定以上のレベルでロッドのチャージ速度が上昇します。'
       }
     )
     .spacer()
