@@ -1,13 +1,12 @@
 import { EquipmentSlot, world, system } from '@minecraft/server'
-import { shootChargedEnergyBall } from '../projectiles/charged_energy_ball.js'
+import { shootEnergyBall } from '../projectiles/energy_ball.js'
 import { useMana } from '../player/mana.js'
-import { getMagicSkill } from '../skills/skill_data.js'
+import { setActionChargeCount } from '../action_bar.js'
 
 const ROD_ID = 'my:rod'
 
 const CHARGE_REQUIRED_TICKS = 20 // 20tick = 約1秒
 const CHARGED_MANA_COST = 2
-const REQUIRED_MAGIC_LEVEL = 1
 
 const chargeStartTicks = new Map()
 
@@ -22,11 +21,6 @@ world.afterEvents.itemStartUse.subscribe(event => {
   }
 
   const player = event.source
-
-  if (getMagicSkill(player) < REQUIRED_MAGIC_LEVEL) {
-    return
-  }
-
   chargeStartTicks.set(player.id, system.currentTick)
 })
 
@@ -46,9 +40,7 @@ world.afterEvents.itemReleaseUse.subscribe(event => {
 
   // チャージ状態解除
   chargeStartTicks.delete(player.id)
-
-  // ゲージを消す
-  player.onScreenDisplay.setActionBar('')
+  setActionChargeCount(0, player)
 
   if (startTick === undefined) {
     return
@@ -77,7 +69,7 @@ world.afterEvents.itemReleaseUse.subscribe(event => {
   // チャージ弾発射
   // -------------------------
 
-  shootChargedEnergyBall(player)
+  shootEnergyBall(player)
 })
 
 /**
@@ -96,15 +88,13 @@ system.runInterval(() => {
 
     if (!heldItem || heldItem.typeId !== ROD_ID) {
       chargeStartTicks.delete(player.id)
-      player.onScreenDisplay.setActionBar('')
+      setActionChargeCount(0, player)
       continue
     }
 
     const chargedTicks = system.currentTick - startTick
     const ratio = Math.min(chargedTicks / CHARGE_REQUIRED_TICKS, 1)
     const filled = Math.floor(ratio * 10)
-    const gauge = '■'.repeat(filled) + '□'.repeat(10 - filled)
-
-    player.onScreenDisplay.setActionBar(`[${gauge}]`)
+    setActionChargeCount(filled, player)
   }
 }, 2)

@@ -1,4 +1,5 @@
 import { world, system } from '@minecraft/server'
+import { setActionMana } from '../action_bar.js'
 
 const MANA_PROPERTY = 'my:mana'
 
@@ -67,10 +68,7 @@ function updateManaHud (player) {
   const ratio = maxMana <= 0 ? 0 : Math.max(0, Math.min(1, mana / maxMana))
 
   const step = Math.round(ratio * 10)
-
-  const manaCode = `M${String(step).padStart(2, '0')}`
-
-  player.onScreenDisplay.setActionBar(manaCode)
+  setActionMana(step, player)
 }
 
 /**

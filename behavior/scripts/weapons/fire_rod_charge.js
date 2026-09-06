@@ -1,6 +1,6 @@
 import { EquipmentSlot, world, system } from '@minecraft/server'
 
-import { shootChargedEnergyBall } from '../projectiles/charged_energy_ball.js'
+import { shootEnergyBall } from '../projectiles/energy_ball.js'
 import { useMana } from '../player/mana.js'
 
 const FIRE_ROD_ID = 'my:fire_rod'
@@ -46,7 +46,7 @@ world.afterEvents.itemReleaseUse.subscribe(event => {
     return
   }
 
-  shootChargedEnergyBall(player)
+  shootEnergyBall(player)
 })
 
 system.runInterval(() => {

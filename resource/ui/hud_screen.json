@@ -3,13 +3,13 @@
   "mana_hud": {
     "type": "panel",
     "size": [
-      82,
+      166,
       8
     ],
     "anchor_from": "bottom_middle",
     "anchor_to": "bottom_middle",
     "offset": [
-      -40,
+      0,
       -60
     ],
     "controls": [
@@ -20,6 +20,10 @@
           "size": [
             82,
             8
+          ],
+          "offset": [
+            -42,
+            0
           ],
           "color": [
             0.08,
@@ -57,51 +61,159 @@
           "$mana_ratio|default": 1,
           "variables": [
             {
-              "requires": "($atext = 'M00')",
+              "requires": "(not (($atext - 'M00') = $atext))",
               "$mana_ratio": 1
             },
             {
-              "requires": "($atext = 'M01')",
+              "requires": "(not (($atext - 'M01') = $atext))",
               "$mana_ratio": 0.9
             },
             {
-              "requires": "($atext = 'M02')",
+              "requires": "(not (($atext - 'M02') = $atext))",
               "$mana_ratio": 0.8
             },
             {
-              "requires": "($atext = 'M03')",
+              "requires": "(not (($atext - 'M03') = $atext))",
               "$mana_ratio": 0.7
             },
             {
-              "requires": "($atext = 'M04')",
+              "requires": "(not (($atext - 'M04') = $atext))",
               "$mana_ratio": 0.6
             },
             {
-              "requires": "($atext = 'M05')",
+              "requires": "(not (($atext - 'M05') = $atext))",
               "$mana_ratio": 0.5
             },
             {
-              "requires": "($atext = 'M06')",
+              "requires": "(not (($atext - 'M06') = $atext))",
               "$mana_ratio": 0.4
             },
             {
-              "requires": "($atext = 'M07')",
+              "requires": "(not (($atext - 'M07') = $atext))",
               "$mana_ratio": 0.3
             },
             {
-              "requires": "($atext = 'M08')",
+              "requires": "(not (($atext - 'M08') = $atext))",
               "$mana_ratio": 0.2
             },
             {
-              "requires": "($atext = 'M09')",
+              "requires": "(not (($atext - 'M09') = $atext))",
               "$mana_ratio": 0.1
             },
             {
-              "requires": "($atext = 'M10')",
+              "requires": "(not (($atext - 'M10') = $atext))",
               "$mana_ratio": 0
             }
           ],
           "clip_ratio": "$mana_ratio",
+          "layer": 11
+        }
+      },
+      {
+        "charge_background": {
+          "type": "image",
+          "texture": "textures/ui/White",
+          "size": [
+            82,
+            8
+          ],
+          "offset": [
+            42,
+            0
+          ],
+          "color": [
+            0.12,
+            0.09,
+            0.05
+          ],
+          "alpha": 0.9,
+          "keep_ratio": false,
+          "$atext": "$actionbar_text",
+          "visible": "(not (($atext - 'C_ON') = $atext))",
+          "layer": 10
+        }
+      },
+      {
+        "charge_fill": {
+          "type": "image",
+          "texture": "textures/ui/White",
+          "size": [
+            80,
+            6
+          ],
+          "anchor_from": "left_middle",
+          "anchor_to": "left_middle",
+          "offset": [
+            85,
+            0
+          ],
+          "$atext": "$actionbar_text",
+          "visible": "(not (($atext - 'C_ON') = $atext))",
+          "$charge_ratio|default": 1,
+          "$charge_color|default": [
+            0.45,
+            0.3,
+            0.12
+          ],
+          "variables": [
+            {
+              "requires": "(not (($atext - 'C00') = $atext))",
+              "$charge_ratio": 1
+            },
+            {
+              "requires": "(not (($atext - 'C01') = $atext))",
+              "$charge_ratio": 0.9
+            },
+            {
+              "requires": "(not (($atext - 'C02') = $atext))",
+              "$charge_ratio": 0.8
+            },
+            {
+              "requires": "(not (($atext - 'C03') = $atext))",
+              "$charge_ratio": 0.7
+            },
+            {
+              "requires": "(not (($atext - 'C04') = $atext))",
+              "$charge_ratio": 0.6
+            },
+            {
+              "requires": "(not (($atext - 'C05') = $atext))",
+              "$charge_ratio": 0.5
+            },
+            {
+              "requires": "(not (($atext - 'C06') = $atext))",
+              "$charge_ratio": 0.4
+            },
+            {
+              "requires": "(not (($atext - 'C07') = $atext))",
+              "$charge_ratio": 0.3
+            },
+            {
+              "requires": "(not (($atext - 'C08') = $atext))",
+              "$charge_ratio": 0.2
+            },
+            {
+              "requires": "(not (($atext - 'C09') = $atext))",
+              "$charge_ratio": 0.1
+            },
+            {
+              "requires": "(not (($atext - 'C10') = $atext))",
+              "$charge_ratio": 0
+            },
+            {
+              "requires": "(not (($atext - 'C_ON') = $atext))",
+              "$charge_color": [
+                1,
+                0.55,
+                0.08
+              ]
+            }
+          ],
+          "color": "$charge_color",
+          "keep_ratio": false,
+          "clip_direction": "left",
+          "clip_pixelperfect": false,
+          "clip_ratio": "$charge_ratio",
           "layer": 11
         }
       }
