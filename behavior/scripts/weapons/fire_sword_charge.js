@@ -6,11 +6,13 @@ import {
 } from '@minecraft/server'
 
 import { useMana } from '../player/mana.js'
+import { setActionChargeCount } from '../action_bar.js'
 
 const FIRE_SWORD_ID = 'my:fire_sword'
 const CHARGE_REQUIRED_TICKS = 20
 const CHARGED_MANA_COST = 1
 const CHARGED_ATTACK_DAMAGE = 8
+const FIRE_DURATION_SECONDS = 5
 const HIT_RANGE = 5
 const HIT_HALF_ANGLE = 70
 const HIT_MIN_HEIGHT = -1.5
@@ -50,7 +52,7 @@ function finishCharge (player) {
   const startTick = chargeStartTicks.get(player.id)
 
   chargeStartTicks.delete(player.id)
-  player.onScreenDisplay.setActionBar('')
+  setActionChargeCount(0, player)
 
   if (startTick === undefined) {
     return
@@ -85,16 +87,14 @@ system.runInterval(() => {
 
     if (!heldItem || heldItem.typeId !== FIRE_SWORD_ID) {
       chargeStartTicks.delete(player.id)
-      player.onScreenDisplay.setActionBar('')
+      setActionChargeCount(0, player)
       continue
     }
 
     const chargedTicks = system.currentTick - startTick
     const ratio = Math.min(chargedTicks / CHARGE_REQUIRED_TICKS, 1)
     const filled = Math.floor(ratio * 10)
-    const gauge = '■'.repeat(filled) + '□'.repeat(10 - filled)
-
-    player.onScreenDisplay.setActionBar(`[${gauge}]`)
+    setActionChargeCount(filled, player)
   }
 }, 2)
 
@@ -159,6 +159,7 @@ function spawnFireSlash (player, forward) {
       cause: EntityDamageCause.entityAttack,
       damagingEntity: player
     })
+    target.setOnFire(FIRE_DURATION_SECONDS, true)
 
     const targetLocation = target.location
 
@@ -169,8 +170,9 @@ function spawnFireSlash (player, forward) {
     })
   }
 
+  showFireSlashHitbox(player, forward)
+
   if (DEBUG_HITBOX) {
-    showFireSlashHitbox(player, forward)
     player.sendMessage(`炎斬撃の命中数: ${targets.length}`)
   }
 }
@@ -223,7 +225,7 @@ function showFireSlashHitbox (player, forward) {
   for (let distance = 1; distance <= HIT_RANGE; distance += 1) {
     for (let angle = -HIT_HALF_ANGLE; angle <= HIT_HALF_ANGLE; angle += 14) {
       const rad = (angle * Math.PI) / 180
-      const debugPosition = {
+      const hitPosition = {
         x:
           origin.x +
           forward.x * Math.cos(rad) * distance +
@@ -235,7 +237,7 @@ function showFireSlashHitbox (player, forward) {
           right.z * Math.sin(rad) * distance
       }
 
-      dimension.spawnParticle('minecraft:basic_flame_particle', debugPosition)
+      dimension.spawnParticle('minecraft:basic_flame_particle', hitPosition)
     }
   }
 }
