@@ -9,8 +9,8 @@
     "anchor_from": "bottom_middle",
     "anchor_to": "bottom_middle",
     "offset": [
-      0,
-      -58
+      -40,
+      -60
     ],
     "controls": [
       {
@@ -46,9 +46,9 @@
             0
           ],
           "color": [
-            0.45,
-            0.2,
-            0.8
+            0.35,
+            0.25,
+            0.9
           ],
           "keep_ratio": false,
           "clip_direction": "left",
