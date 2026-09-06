@@ -2,7 +2,7 @@
 import './weapons/rod_charge.js'
 // import './weapons/fire_rod.js'
 import './weapons/fire_rod_charge.js'
-// import './weapons/ice_rod.js'
+import './weapons/ice_rod_charge.js'
 import './weapons/fire_sword.js'
 import './weapons/fire_sword_charge.js'
 import './player/mana.js'

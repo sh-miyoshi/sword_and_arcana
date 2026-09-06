@@ -10,7 +10,26 @@
       },
       "minecraft:icon": "my:ice_rod",
       "minecraft:max_stack_size": 1,
-      "minecraft:hand_equipped": true
+      "minecraft:hand_equipped": true,
+      "minecraft:use_modifiers": {
+        "use_duration": 9999,
+        "movement_modifier": 0.3
+      },
+      "minecraft:shooter": {
+        "ammunition": [
+          {
+            "item": "my:mana_ammo",
+            "search_inventory": true,
+            "use_in_creative": false
+          }
+        ],
+        "max_draw_duration": 10,
+        "scale_power_by_draw_duration": false,
+        "charge_on_draw": false
+      },
+      "minecraft:projectile": {
+        "projectile_entity": "my:ice_ball"
+      }
     }
   }
 }

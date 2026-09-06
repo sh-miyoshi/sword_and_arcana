@@ -51,4 +51,6 @@ export function shootIceBall (player) {
       ball.remove()
     }
   }, LIFETIME)
+
+  return ball
 }
