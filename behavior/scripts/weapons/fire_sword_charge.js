@@ -7,9 +7,9 @@ import {
 
 import { useMana } from '../player/mana.js'
 import { setActionChargeCount } from '../action_bar.js'
+import { getAttackChargeRequiredTicks } from '../skills/skill_data.js'
 
 const FIRE_SWORD_ID = 'my:fire_sword'
-const CHARGE_REQUIRED_TICKS = 20
 const CHARGED_MANA_COST = 1
 const CHARGED_ATTACK_DAMAGE = 8
 const FIRE_DURATION_SECONDS = 5
@@ -59,8 +59,9 @@ function finishCharge (player) {
   }
 
   const chargedTicks = system.currentTick - startTick
+  const chargeRequiredTicks = getAttackChargeRequiredTicks(player)
 
-  if (chargedTicks < CHARGE_REQUIRED_TICKS) {
+  if (chargedTicks < chargeRequiredTicks) {
     return
   }
 
@@ -92,7 +93,8 @@ system.runInterval(() => {
     }
 
     const chargedTicks = system.currentTick - startTick
-    const ratio = Math.min(chargedTicks / CHARGE_REQUIRED_TICKS, 1)
+    const chargeRequiredTicks = getAttackChargeRequiredTicks(player)
+    const ratio = Math.min(chargedTicks / chargeRequiredTicks, 1)
     const filled = Math.floor(ratio * 10)
     setActionChargeCount(filled, player)
   }

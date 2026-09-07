@@ -3,9 +3,9 @@ import { EquipmentSlot, world, system } from '@minecraft/server'
 import { setActionChargeCount } from '../action_bar.js'
 import { shootIceBall } from '../projectiles/ice_ball.js'
 import { useMana } from '../player/mana.js'
+import { getChargeRequiredTicks } from '../skills/skill_data.js'
 
 const ICE_ROD_ID = 'my:ice_rod'
-const CHARGE_REQUIRED_TICKS = 20
 const CHARGED_MANA_COST = 3
 const SLOWDOWN_DURATION_TICKS = 100
 const SLOWDOWN_AMPLIFIER = 1
@@ -42,8 +42,9 @@ world.afterEvents.itemReleaseUse.subscribe(event => {
   }
 
   const chargedTicks = system.currentTick - startTick
+  const chargeRequiredTicks = getChargeRequiredTicks(player)
 
-  if (chargedTicks < CHARGE_REQUIRED_TICKS) {
+  if (chargedTicks < chargeRequiredTicks) {
     return
   }
 
@@ -104,7 +105,8 @@ system.runInterval(() => {
     }
 
     const chargedTicks = system.currentTick - startTick
-    const ratio = Math.min(chargedTicks / CHARGE_REQUIRED_TICKS, 1)
+    const chargeRequiredTicks = getChargeRequiredTicks(player)
+    const ratio = Math.min(chargedTicks / chargeRequiredTicks, 1)
     const filled = Math.floor(ratio * 10)
     setActionChargeCount(filled, player)
   }

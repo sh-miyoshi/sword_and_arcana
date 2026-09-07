@@ -29,6 +29,24 @@ export function getMagicSkill (player) {
   return getNumber(player, MAGIC_SKILL_PROPERTY, 0)
 }
 
+export function getChargeRequiredTicks (player) {
+  return getRequiredChargeTicks(getMagicSkill(player))
+}
+
+export function getAttackChargeRequiredTicks (player) {
+  return getRequiredChargeTicks(getAttackSkill(player))
+}
+
+function getRequiredChargeTicks (skillLevel) {
+  if (skillLevel >= 10) return 10
+  if (skillLevel >= 7) return 17
+  if (skillLevel >= 5) return 20
+  if (skillLevel >= 3) return 25
+  if (skillLevel >= 1) return 30
+
+  return 40
+}
+
 export function getSkillPoints (player) {
   return getNumber(player, SKILL_POINTS_PROPERTY, 5)
 }

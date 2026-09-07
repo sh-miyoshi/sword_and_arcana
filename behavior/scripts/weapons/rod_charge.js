@@ -2,10 +2,10 @@ import { EquipmentSlot, world, system } from '@minecraft/server'
 import { shootEnergyBall } from '../projectiles/energy_ball.js'
 import { useMana } from '../player/mana.js'
 import { setActionChargeCount } from '../action_bar.js'
+import { getChargeRequiredTicks } from '../skills/skill_data.js'
 
 const ROD_ID = 'my:rod'
 
-const CHARGE_REQUIRED_TICKS = 20 // 20tick = 約1秒
 const CHARGED_MANA_COST = 2
 
 const chargeStartTicks = new Map()
@@ -47,12 +47,13 @@ world.afterEvents.itemReleaseUse.subscribe(event => {
   }
 
   const chargedTicks = system.currentTick - startTick
+  const chargeRequiredTicks = getChargeRequiredTicks(player)
 
   // -------------------------
   // 1秒未満なら不発
   // -------------------------
 
-  if (chargedTicks < CHARGE_REQUIRED_TICKS) {
+  if (chargedTicks < chargeRequiredTicks) {
     return
   }
 
@@ -93,7 +94,8 @@ system.runInterval(() => {
     }
 
     const chargedTicks = system.currentTick - startTick
-    const ratio = Math.min(chargedTicks / CHARGE_REQUIRED_TICKS, 1)
+    const chargeRequiredTicks = getChargeRequiredTicks(player)
+    const ratio = Math.min(chargedTicks / chargeRequiredTicks, 1)
     const filled = Math.floor(ratio * 10)
     setActionChargeCount(filled, player)
   }

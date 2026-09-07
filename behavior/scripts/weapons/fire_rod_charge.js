@@ -3,9 +3,9 @@ import { EquipmentSlot, world, system } from '@minecraft/server'
 import { shootEnergyBall } from '../projectiles/energy_ball.js'
 import { useMana } from '../player/mana.js'
 import { setActionChargeCount } from '../action_bar.js'
+import { getChargeRequiredTicks } from '../skills/skill_data.js'
 
 const FIRE_ROD_ID = 'my:fire_rod'
-const CHARGE_REQUIRED_TICKS = 20
 const CHARGED_MANA_COST = 3
 const FIRE_DURATION_SECONDS = 5
 const ENERGY_BALL_LIFETIME_TICKS = 40
@@ -40,8 +40,9 @@ world.afterEvents.itemReleaseUse.subscribe(event => {
   }
 
   const chargedTicks = system.currentTick - startTick
+  const chargeRequiredTicks = getChargeRequiredTicks(player)
 
-  if (chargedTicks < CHARGE_REQUIRED_TICKS) {
+  if (chargedTicks < chargeRequiredTicks) {
     return
   }
 
@@ -97,7 +98,8 @@ system.runInterval(() => {
     }
 
     const chargedTicks = system.currentTick - startTick
-    const ratio = Math.min(chargedTicks / CHARGE_REQUIRED_TICKS, 1)
+    const chargeRequiredTicks = getChargeRequiredTicks(player)
+    const ratio = Math.min(chargedTicks / chargeRequiredTicks, 1)
     const filled = Math.floor(ratio * 10)
     setActionChargeCount(filled, player)
   }
