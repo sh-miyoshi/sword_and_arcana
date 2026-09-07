@@ -1,0 +1,25 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:item": {
+    "description": {
+      "identifier": "my:ice_sword"
+    },
+    "components": {
+      "minecraft:display_name": {
+        "value": "アイスソード"
+      },
+      "minecraft:icon": "my:ice_sword",
+      "minecraft:max_stack_size": 1,
+      "minecraft:hand_equipped": true,
+      "minecraft:damage": 7,
+      "minecraft:durability": {
+        "max_durability": 500
+      },
+      "minecraft:use_modifiers": {
+        "use_duration": 9999,
+        "movement_modifier": 0.5
+      },
+      "my:ice_sword_charge": {}
+    }
+  }
+}

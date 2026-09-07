@@ -18,6 +18,9 @@
     },
     "my:mana_berry": {
       "textures": "textures/items/mana_berry"
+    },
+    "my:ice_sword": {
+      "textures": "textures/items/ice_sword"
     }
   }
 }
