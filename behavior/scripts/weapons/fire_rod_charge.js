@@ -1,16 +1,13 @@
 import { EquipmentSlot, world, system } from '@minecraft/server'
 
-import { shootEnergyBall } from '../projectiles/energy_ball.js'
+import { shootFireBall } from '../projectiles/fire_ball.js'
 import { useMana } from '../player/mana.js'
 import { setActionChargeCount } from '../action_bar.js'
 import { getChargeRequiredTicks } from '../skills/skill_data.js'
 
 const FIRE_ROD_ID = 'my:fire_rod'
 const CHARGED_MANA_COST = 3
-const FIRE_DURATION_SECONDS = 5
-const ENERGY_BALL_LIFETIME_TICKS = 40
 const chargeStartTicks = new Map()
-const fireEnergyBallIds = new Set()
 
 world.afterEvents.itemStartUse.subscribe(event => {
   const item = event.itemStack
@@ -51,33 +48,7 @@ world.afterEvents.itemReleaseUse.subscribe(event => {
     return
   }
 
-  const ball = shootEnergyBall(player)
-
-  if (ball) {
-    fireEnergyBallIds.add(ball.id)
-
-    system.runTimeout(() => {
-      fireEnergyBallIds.delete(ball.id)
-    }, ENERGY_BALL_LIFETIME_TICKS)
-  }
-})
-
-world.afterEvents.projectileHitEntity.subscribe(event => {
-  if (!fireEnergyBallIds.delete(event.projectile.id)) {
-    return
-  }
-
-  const hitEntity = event.getEntityHit()?.entity
-
-  if (!hitEntity) {
-    return
-  }
-
-  hitEntity.setOnFire(FIRE_DURATION_SECONDS, true)
-})
-
-world.afterEvents.projectileHitBlock.subscribe(event => {
-  fireEnergyBallIds.delete(event.projectile.id)
+  shootFireBall(player)
 })
 
 system.runInterval(() => {

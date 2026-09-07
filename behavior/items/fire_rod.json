@@ -28,7 +28,7 @@
         "charge_on_draw": false
       },
       "minecraft:projectile": {
-        "projectile_entity": "my:energy_ball"
+        "projectile_entity": "my:fire_ball"
       }
     }
   }
