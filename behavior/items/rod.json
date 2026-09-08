@@ -2,7 +2,10 @@
   "format_version": "1.20.50",
   "minecraft:item": {
     "description": {
-      "identifier": "my:rod"
+      "identifier": "my:rod",
+      "menu_category": {
+        "category": "equipment"
+      }
     },
     "components": {
       "minecraft:display_name": {
