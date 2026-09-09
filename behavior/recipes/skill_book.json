@@ -2,31 +2,29 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "my:fire_rod_recipe"
+      "identifier": "my:skill_book_recipe"
     },
     "tags": [
       "crafting_table"
     ],
     "unlock": [
       {
-        "item": "my:rod"
+        "item": "my:mana_berry"
       }
     ],
     "pattern": [
-      " C ",
-      " C ",
-      " R "
+      "BM"
     ],
     "key": {
-      "C": {
-        "tag": "minecraft:coals"
+      "B": {
+        "item": "minecraft:book"
       },
-      "R": {
-        "item": "my:rod"
+      "M": {
+        "item": "my:mana_berry"
       }
     },
     "result": {
-      "item": "my:fire_rod",
+      "item": "my:skill_book",
       "count": 1
     }
   }

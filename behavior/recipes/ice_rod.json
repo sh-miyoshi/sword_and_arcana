@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
-      "identifier": "my:fire_rod_recipe"
+      "identifier": "my:ice_rod_recipe"
     },
     "tags": [
       "crafting_table"
@@ -13,20 +13,20 @@
       }
     ],
     "pattern": [
-      " C ",
-      " C ",
+      " S ",
+      " S ",
       " R "
     ],
     "key": {
-      "C": {
-        "tag": "minecraft:coals"
+      "S": {
+        "item": "minecraft:snowball"
       },
       "R": {
         "item": "my:rod"
       }
     },
     "result": {
-      "item": "my:fire_rod",
+      "item": "my:ice_rod",
       "count": 1
     }
   }
