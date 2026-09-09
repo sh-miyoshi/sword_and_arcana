@@ -5,6 +5,14 @@ const SKILL_POINTS_PROPERTY = 'my:skill_points'
 
 export const MAX_SKILL_LEVEL = 10
 export const SKILL_POINT_LEVEL_COST = 3
+export const ATTACK_DAMAGE_PER_LEVEL = 0.5
+
+export function getAttackDamageBonus (player) {
+  // Read-only: this is also called from beforeEvents.
+  const level = player.getDynamicProperty(ATTACK_SKILL_PROPERTY)
+  if (typeof level !== 'number' || !Number.isFinite(level)) return 0
+  return Math.max(0, Math.min(MAX_SKILL_LEVEL, level)) * ATTACK_DAMAGE_PER_LEVEL
+}
 
 function getNumber (player, property, defaultValue = 0) {
   const value = player.getDynamicProperty(property)

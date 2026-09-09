@@ -116,7 +116,7 @@ export function showSkillPanel (player) {
       },
       {
         disabled: healthButtonDisabled,
-        tooltip: '体力スキルを1上げます。'
+        tooltip: '体力を少し上げます。'
       }
     )
     .spacer()
@@ -135,7 +135,7 @@ export function showSkillPanel (player) {
       {
         disabled: attackButtonDisabled,
         tooltip:
-          '攻撃力スキルを1上げます。一定以上のレベルでソードのチャージ速度が上昇します。'
+          '攻撃力を少し上げます。一定以上のレベルでソードのチャージ速度が上昇します。'
       }
     )
     .spacer()
