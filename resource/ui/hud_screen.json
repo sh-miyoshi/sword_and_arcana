@@ -14,20 +14,167 @@
     ],
     "controls": [
       {
-        "mana_debug_label": {
-          "type": "label",
-          "text": "MP",
-          "offset": [
-            -42,
-            -10
+        "mana_icons": {
+          "type": "panel",
+          "size": [
+            82,
+            20
           ],
-          "color": [
-            0.7,
-            0.65,
-            1
-          ],
-          "shadow": true,
-          "layer": 12
+          "anchor_from": "left_middle",
+          "anchor_to": "left_middle",
+          "offset": [-8, 2],
+          "controls": [
+            {
+              "mp_01@hud.mana_icon_slot": {
+                "$background_token": "|B01|",
+                "$filled_token": "|P01|",
+                "offset": [
+                  0,
+                  0
+                ]
+              }
+            },
+            {
+              "mp_02@hud.mana_icon_slot": {
+                "$background_token": "|B02|",
+                "$filled_token": "|P02|",
+                "offset": [
+                  8,
+                  0
+                ]
+              }
+            },
+            {
+              "mp_03@hud.mana_icon_slot": {
+                "$background_token": "|B03|",
+                "$filled_token": "|P03|",
+                "offset": [
+                  16,
+                  0
+                ]
+              }
+            },
+            {
+              "mp_04@hud.mana_icon_slot": {
+                "$background_token": "|B04|",
+                "$filled_token": "|P04|",
+                "offset": [
+                  24,
+                  0
+                ]
+              }
+            },
+            {
+              "mp_05@hud.mana_icon_slot": {
+                "$background_token": "|B05|",
+                "$filled_token": "|P05|",
+                "offset": [
+                  32,
+                  0
+                ]
+              }
+            },
+            {
+              "mp_06@hud.mana_icon_slot": {
+                "$background_token": "|B06|",
+                "$filled_token": "|P06|",
+                "offset": [
+                  40,
+                  0
+                ]
+              }
+            },
+            {
+              "mp_07@hud.mana_icon_slot": {
+                "$background_token": "|B07|",
+                "$filled_token": "|P07|",
+                "offset": [
+                  48,
+                  0
+                ]
+              }
+            },
+            {
+              "mp_08@hud.mana_icon_slot": {
+                "$background_token": "|B08|",
+                "$filled_token": "|P08|",
+                "offset": [
+                  56,
+                  0
+                ]
+              }
+            },
+            {
+              "mp_09@hud.mana_icon_slot": {
+                "$background_token": "|B09|",
+                "$filled_token": "|P09|",
+                "offset": [
+                  64,
+                  0
+                ]
+              }
+            },
+            {
+              "mp_10@hud.mana_icon_slot": {
+                "$background_token": "|B10|",
+                "$filled_token": "|P10|",
+                "offset": [
+                  72,
+                  0
+                ]
+              }
+            },
+            {
+              "mp_11@hud.mana_icon_slot": {
+                "$background_token": "|B11|",
+                "$filled_token": "|P11|",
+                "offset": [
+                  0,
+                  -10
+                ]
+              }
+            },
+            {
+              "mp_12@hud.mana_icon_slot": {
+                "$background_token": "|B12|",
+                "$filled_token": "|P12|",
+                "offset": [
+                  8,
+                  -10
+                ]
+              }
+            },
+            {
+              "mp_13@hud.mana_icon_slot": {
+                "$background_token": "|B13|",
+                "$filled_token": "|P13|",
+                "offset": [
+                  16,
+                  -10
+                ]
+              }
+            },
+            {
+              "mp_14@hud.mana_icon_slot": {
+                "$background_token": "|B14|",
+                "$filled_token": "|P14|",
+                "offset": [
+                  24,
+                  -10
+                ]
+              }
+            },
+            {
+              "mp_15@hud.mana_icon_slot": {
+                "$background_token": "|B15|",
+                "$filled_token": "|P15|",
+                "offset": [
+                  32,
+                  -10
+                ]
+              }
+            }
+          ]
         }
       },
       {
@@ -47,102 +194,6 @@
           "$atext": "$actionbar_text",
           "visible": "(not (($atext - 'C_ON') = $atext))",
           "layer": 12
-        }
-      },
-      {
-        "mana_background": {
-          "type": "image",
-          "texture": "textures/ui/White",
-          "size": [
-            82,
-            8
-          ],
-          "offset": [
-            -42,
-            0
-          ],
-          "color": [
-            0.08,
-            0.08,
-            0.12
-          ],
-          "alpha": 0.9,
-          "keep_ratio": false,
-          "layer": 10
-        }
-      },
-      {
-        "mana_fill": {
-          "type": "image",
-          "texture": "textures/ui/White",
-          "size": [
-            80,
-            6
-          ],
-          "anchor_from": "left_middle",
-          "anchor_to": "left_middle",
-          "offset": [
-            1,
-            0
-          ],
-          "color": [
-            0.35,
-            0.25,
-            0.9
-          ],
-          "keep_ratio": false,
-          "clip_direction": "left",
-          "clip_pixelperfect": false,
-          "$atext": "$actionbar_text",
-          "$mana_ratio|default": 1,
-          "variables": [
-            {
-              "requires": "(not (($atext - 'M00') = $atext))",
-              "$mana_ratio": 1
-            },
-            {
-              "requires": "(not (($atext - 'M01') = $atext))",
-              "$mana_ratio": 0.9
-            },
-            {
-              "requires": "(not (($atext - 'M02') = $atext))",
-              "$mana_ratio": 0.8
-            },
-            {
-              "requires": "(not (($atext - 'M03') = $atext))",
-              "$mana_ratio": 0.7
-            },
-            {
-              "requires": "(not (($atext - 'M04') = $atext))",
-              "$mana_ratio": 0.6
-            },
-            {
-              "requires": "(not (($atext - 'M05') = $atext))",
-              "$mana_ratio": 0.5
-            },
-            {
-              "requires": "(not (($atext - 'M06') = $atext))",
-              "$mana_ratio": 0.4
-            },
-            {
-              "requires": "(not (($atext - 'M07') = $atext))",
-              "$mana_ratio": 0.3
-            },
-            {
-              "requires": "(not (($atext - 'M08') = $atext))",
-              "$mana_ratio": 0.2
-            },
-            {
-              "requires": "(not (($atext - 'M09') = $atext))",
-              "$mana_ratio": 0.1
-            },
-            {
-              "requires": "(not (($atext - 'M10') = $atext))",
-              "$mana_ratio": 0
-            }
-          ],
-          "clip_ratio": "$mana_ratio",
-          "layer": 11
         }
       },
       {
@@ -279,5 +330,33 @@
   },
   "hud_actionbar_text": {
     "visible": false
+  },
+  "mana_icon_slot": {
+    "type": "image",
+    "texture": "textures/ui/mp_background",
+    "size": [
+      9,
+      9
+    ],
+    "anchor_from": "left_middle",
+    "anchor_to": "left_middle",
+    "$atext": "$actionbar_text",
+    "visible": "(not (($atext - $background_token) = $atext))",
+    "layer": 10,
+    "controls": [
+      {
+        "filled": {
+          "type": "image",
+          "texture": "textures/ui/mp",
+          "size": [
+            9,
+            9
+          ],
+          "$atext": "$actionbar_text",
+          "visible": "(not (($atext - $filled_token) = $atext))",
+          "layer": 11
+        }
+      }
+    ]
   }
 }

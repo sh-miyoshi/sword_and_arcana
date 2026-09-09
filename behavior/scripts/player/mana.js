@@ -77,10 +77,7 @@ function updateManaHud (player) {
   const mana = getMana(player)
   const maxMana = getMaxMana(player)
 
-  const ratio = maxMana <= 0 ? 0 : Math.max(0, Math.min(1, mana / maxMana))
-
-  const step = Math.round(ratio * 10)
-  setActionMana(step, player)
+  setActionMana(mana, maxMana, player)
 }
 
 /**
