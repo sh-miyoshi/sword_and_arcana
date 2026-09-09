@@ -22,7 +22,10 @@
           ],
           "anchor_from": "left_middle",
           "anchor_to": "left_middle",
-          "offset": [-8, 2],
+          "offset": [
+            -8,
+            2
+          ],
           "controls": [
             {
               "mp_01@hud.mana_icon_slot": {
@@ -182,8 +185,8 @@
           "type": "label",
           "text": "Charge",
           "offset": [
-            42,
-            -10
+            0,
+            -26
           ],
           "color": [
             1,
@@ -205,8 +208,8 @@
             8
           ],
           "offset": [
-            42,
-            0
+            0,
+            -16
           ],
           "color": [
             0.12,
@@ -231,8 +234,8 @@
           "anchor_from": "left_middle",
           "anchor_to": "left_middle",
           "offset": [
-            85,
-            0
+            43,
+            -16
           ],
           "$atext": "$actionbar_text",
           "visible": "(not (($atext - 'C_ON') = $atext))",
