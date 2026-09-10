@@ -45,6 +45,8 @@ export function shootFireBall (player) {
       ball.remove()
     }
   }, LIFETIME_TICKS)
+
+  return ball
 }
 
 world.afterEvents.projectileHitEntity.subscribe(event => {

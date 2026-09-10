@@ -48,7 +48,16 @@ world.afterEvents.itemReleaseUse.subscribe(event => {
     return
   }
 
-  shootFireBall(player)
+  const ball = shootFireBall(player)
+
+  if (!ball) {
+    return
+  }
+
+  player.dimension.playSound('my.fire', player.location, {
+    volume: 1,
+    pitch: 1
+  })
 })
 
 system.runInterval(() => {

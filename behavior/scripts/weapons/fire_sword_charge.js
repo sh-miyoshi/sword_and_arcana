@@ -116,6 +116,10 @@ function fireSwordChargeAttack (player) {
   }
 
   spawnFireSlash(player, forward)
+  player.dimension.playSound('my.fire', player.location, {
+    volume: 1,
+    pitch: 1
+  })
 }
 
 function spawnFireSlash (player, forward) {

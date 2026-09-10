@@ -117,6 +117,10 @@ function iceSwordChargeAttack (player) {
   }
 
   spawnIceSlash(player, forward)
+  player.dimension.playSound('my.ice', player.location, {
+    volume: 1,
+    pitch: 1
+  })
 }
 
 function spawnIceSlash (player, forward) {

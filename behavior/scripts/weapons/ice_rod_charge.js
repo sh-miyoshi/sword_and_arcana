@@ -63,6 +63,11 @@ world.afterEvents.itemReleaseUse.subscribe(event => {
   system.runTimeout(() => {
     iceBallIds.delete(ball.id)
   }, ICE_BALL_LIFETIME_TICKS)
+
+  player.dimension.playSound('my.ice', player.location, {
+    volume: 1,
+    pitch: 1
+  })
 })
 
 world.afterEvents.projectileHitEntity.subscribe(event => {

@@ -1,0 +1,17 @@
+{
+  "format_version": "1.14.0",
+  "sound_definitions": {
+    "my.ice": {
+      "category": "player",
+      "sounds": [
+        "sounds/ice"
+      ]
+    },
+    "my.fire": {
+      "category": "player",
+      "sounds": [
+        "sounds/fire"
+      ]
+    }
+  }
+}
