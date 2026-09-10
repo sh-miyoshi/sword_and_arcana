@@ -1,1 +1,2 @@
-deploy-behavior.ps1
+deploy-development.ps1
+tmp/*

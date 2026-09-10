@@ -13,13 +13,13 @@
       }
     ],
     "pattern": [
-      " F ",
-      " F ",
+      " C ",
+      " C ",
       " S "
     ],
     "key": {
-      "F": {
-        "item": "minecraft:fire_charge"
+      "C": {
+        "tag": "minecraft:coals"
       },
       "S": {
         "item": "minecraft:iron_sword"
