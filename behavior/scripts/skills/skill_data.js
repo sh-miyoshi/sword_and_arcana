@@ -38,19 +38,23 @@ export function getMagicSkill (player) {
 }
 
 export function getChargeRequiredTicks (player) {
-  return getRequiredChargeTicks(getMagicSkill(player))
-}
+  const skillLevel = getMagicSkill(player)
 
-export function getAttackChargeRequiredTicks (player) {
-  return getRequiredChargeTicks(getAttackSkill(player))
-}
-
-function getRequiredChargeTicks (skillLevel) {
   if (skillLevel >= 10) return 10
   if (skillLevel >= 7) return 17
   if (skillLevel >= 5) return 20
   if (skillLevel >= 3) return 25
   if (skillLevel >= 1) return 30
+
+  return 40
+}
+
+export function getAttackChargeRequiredTicks (player) {
+  const skillLevel = getAttackSkill(player)
+
+  if (skillLevel >= 10) return 20
+  if (skillLevel >= 5) return 30
+  if (skillLevel >= 1) return 35
 
   return 40
 }
