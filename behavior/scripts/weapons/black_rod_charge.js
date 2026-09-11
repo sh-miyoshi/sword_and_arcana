@@ -81,7 +81,12 @@ function getTargetCenter (player) {
     includeLiquidBlocks: false,
     includePassableBlocks: false
   })
-  let center
+  // 何にも当たらない場合は、目の位置から視線方向へ最大射程まで進んだ地点。
+  let center = {
+    x: origin.x + direction.x * MAX_TARGET_DISTANCE,
+    y: origin.y + direction.y * MAX_TARGET_DISTANCE,
+    z: origin.z + direction.z * MAX_TARGET_DISTANCE
+  }
   let nearestDistance = MAX_TARGET_DISTANCE
   if (blockHit) {
     // faceLocationはブロック内の相対座標。狙った面の正確な位置へ変換する。
@@ -121,10 +126,6 @@ world.afterEvents.itemStartUse.subscribe(event => {
   }
   try {
     const center = getTargetCenter(player)
-    if (!center) {
-      player.sendMessage(`${MAX_TARGET_DISTANCE}マス以内のブロックかモブに照準を合わせてください。`)
-      return
-    }
     const charge = {
       center,
       dimension: player.dimension,
