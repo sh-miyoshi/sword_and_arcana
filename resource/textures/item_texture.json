@@ -4,6 +4,9 @@
     "my:rod": {
       "textures": "textures/items/rod"
     },
+    "my:black_rod": {
+      "textures": "textures/items/rod"
+    },
     "my:fire_rod": {
       "textures": "textures/items/fire_rod"
     },

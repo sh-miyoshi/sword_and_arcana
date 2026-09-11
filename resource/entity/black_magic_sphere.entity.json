@@ -1,0 +1,13 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "my:black_magic_sphere",
+      "materials": { "default": "entity_alphatest" },
+      "textures": { "default": "textures/blocks/obsidian" },
+      "geometry": { "default": "geometry.black_magic_sphere" },
+      "scripts": { "scale": "query.property('my:radius')" },
+      "render_controllers": ["controller.render.black_magic_sphere"]
+    }
+  }
+}
