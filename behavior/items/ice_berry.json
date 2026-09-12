@@ -13,7 +13,7 @@
       },
       "minecraft:icon": {
         "textures": {
-          "default": "my:mana_berry"
+          "default": "my:ice_berry"
         }
       },
       "minecraft:max_stack_size": 64,
