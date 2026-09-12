@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "my:black_rod_recipe"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "my:rod"
+      }
+    ],
+    "pattern": [
+      " N ",
+      " N ",
+      " R "
+    ],
+    "key": {
+      "N": {
+        "item": "minecraft:netherite_ingot"
+      },
+      "R": {
+        "item": "my:rod"
+      }
+    },
+    "result": {
+      "item": "my:black_rod",
+      "count": 1
+    }
+  }
+}
