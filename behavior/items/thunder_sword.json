@@ -1,0 +1,22 @@
+{
+  "format_version": "1.26.30",
+  "minecraft:item": {
+    "description": {
+      "identifier": "my:thunder_sword",
+      "menu_category": { "category": "equipment" }
+    },
+    "components": {
+      "minecraft:display_name": { "value": "サンダーソード" },
+      "minecraft:icon": "my:thunder_sword",
+      "minecraft:max_stack_size": 1,
+      "minecraft:hand_equipped": true,
+      "minecraft:damage": 7,
+      "minecraft:durability": { "max_durability": 500 },
+      "minecraft:use_modifiers": {
+        "use_duration": 9999,
+        "movement_modifier": 0.5
+      },
+      "my:thunder_sword_charge": {}
+    }
+  }
+}

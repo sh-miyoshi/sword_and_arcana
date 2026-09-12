@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "my:thunder_sword_recipe"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:iron_sword"
+      }
+    ],
+    "pattern": [
+      " C ",
+      " C ",
+      " S "
+    ],
+    "key": {
+      "C": {
+        "item": "minecraft:copper_ingot"
+      },
+      "S": {
+        "item": "minecraft:iron_sword"
+      }
+    },
+    "result": {
+      "item": "my:thunder_sword",
+      "count": 1
+    }
+  }
+}
