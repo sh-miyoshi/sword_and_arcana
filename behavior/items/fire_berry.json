@@ -1,0 +1,33 @@
+{
+  "format_version": "1.21.90",
+  "minecraft:item": {
+    "description": {
+      "identifier": "my:fire_berry",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:display_name": {
+        "value": "炎力の実"
+      },
+      "minecraft:icon": {
+        "textures": {
+          "default": "my:mana_berry"
+        }
+      },
+      "minecraft:max_stack_size": 64,
+      "minecraft:food": {
+        "can_always_eat": true,
+        "nutrition": 1,
+        "saturation_modifier": 0.1
+      },
+      "minecraft:use_animation": "eat",
+      "minecraft:use_modifiers": {
+        "use_duration": 1.6,
+        "movement_modifier": 0.35
+      },
+      "my:fire_power": {}
+    }
+  }
+}
