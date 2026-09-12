@@ -27,6 +27,12 @@
     },
     "my:ice_sword": {
       "textures": "textures/items/ice_sword"
+    },
+    "my:fire_berry": {
+      "textures": "textures/items/fire_berry"
+    },
+    "my:ice_berry": {
+      "textures": "textures/items/ice_berry"
     }
   }
 }

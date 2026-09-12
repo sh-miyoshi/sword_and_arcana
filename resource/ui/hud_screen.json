@@ -335,8 +335,7 @@
     "visible": false
   },
   "mana_icon_slot": {
-    "type": "image",
-    "texture": "textures/ui/mp_background",
+    "type": "panel",
     "size": [
       9,
       9
@@ -345,8 +344,44 @@
     "anchor_to": "left_middle",
     "$atext": "$actionbar_text",
     "visible": "(not (($atext - $background_token) = $atext))",
-    "layer": 10,
+    "layer": 0,
     "controls": [
+      {
+        "fire_background": {
+          "type": "image",
+          "texture": "textures/ui/mp_fire",
+          "size": [14, 14],
+          "anchor_from": "center",
+          "anchor_to": "center",
+          "$atext": "$actionbar_text",
+          "visible": "(not (($atext - '|FIRE_BUFF|') = $atext))",
+          "offset": [0, -2],
+          "layer": 9
+        }
+      },
+      {
+        "ice_background": {
+          "type": "image",
+          "texture": "textures/ui/mp_ice",
+          "size": [14, 14],
+          "anchor_from": "center",
+          "anchor_to": "center",
+          "$atext": "$actionbar_text",
+          "visible": "(not (($atext - '|ICE_BUFF|') = $atext))",
+          "offset": [0, -2],
+          "layer": 9
+        }
+      },
+      {
+        "background": {
+          "type": "image",
+          "texture": "textures/ui/mp_background",
+          "size": [9, 9],
+          "anchor_from": "center",
+          "anchor_to": "center",
+          "layer": 10
+        }
+      },
       {
         "filled": {
           "type": "image",

@@ -4,7 +4,7 @@ const playerStates = new Map()
 
 function getState (player) {
   if (!playerStates.has(player.id)) {
-    playerStates.set(player.id, { mana: 0, maxMana: 0, chargeCount: 0 })
+    playerStates.set(player.id, { mana: 0, maxMana: 0, chargeCount: 0, element: undefined })
   }
   return playerStates.get(player.id)
 }
@@ -22,6 +22,13 @@ export const setActionChargeCount = (value, player) => {
   updateActionBarText(player, state)
 }
 
+export const setActionElement = (element, player) => {
+  const state = getState(player)
+  if (state.element === element) return
+  state.element = element
+  updateActionBarText(player, state)
+}
+
 function updateActionBarText (player, state) {
   const tokens = []
   // One background per maximum MP, one filled icon per current MP.
@@ -32,6 +39,8 @@ function updateActionBarText (player, state) {
   }
   tokens.push('C' + String(state.chargeCount).padStart(2, '0'))
   tokens.push(state.chargeCount > 0 ? 'C_ON' : 'C_OFF')
+  if (state.element === 'fire') tokens.push('FIRE_BUFF')
+  if (state.element === 'ice') tokens.push('ICE_BUFF')
   player.onScreenDisplay.setActionBar('|' + tokens.join('|') + '|')
 }
 

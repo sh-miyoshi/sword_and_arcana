@@ -1,6 +1,7 @@
 import { EntityDamageCause, EquipmentSlot, world, system } from '@minecraft/server'
 
 import { useMana } from '../player/mana.js'
+import { applyChargeDamage } from '../combat/damage.js'
 import { setActionChargeCount } from '../action_bar.js'
 import { getAttackChargeRequiredTicks } from '../skills/skill_data.js'
 
@@ -113,9 +114,11 @@ function damageLine (player, dimension, origin, forward, right) {
       if (distanceForward <= 0 || distanceForward > HIT_RANGE ||
           Math.abs(distanceSide) > HIT_HALF_WIDTH || dy < HIT_MIN_HEIGHT || dy > HIT_MAX_HEIGHT) continue
       // entityAttackを使うため、既存の攻撃スキルによる加算も適用される。
-      target.applyDamage(CHARGED_ATTACK_DAMAGE, {
-        cause: EntityDamageCause.entityAttack,
-        damagingEntity: player
+      applyChargeDamage({
+        attacker: player,
+        target,
+        baseDamage: CHARGED_ATTACK_DAMAGE,
+        cause: EntityDamageCause.entityAttack
       })
     } catch (error) {
       console.warn(`[thunder_sword] ダメージ処理失敗: ${error}`)

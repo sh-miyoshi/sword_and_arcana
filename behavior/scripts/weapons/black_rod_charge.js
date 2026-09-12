@@ -1,6 +1,7 @@
 import { EntityDamageCause, EquipmentSlot, world, system } from '@minecraft/server'
 
 import { setActionChargeCount } from '../action_bar.js'
+import { applyChargeDamage } from '../combat/damage.js'
 import { getMana, useMana } from '../player/mana.js'
 import { getChargeRequiredTicks } from '../skills/skill_data.js'
 
@@ -206,7 +207,7 @@ function detonate (player, charge) {
       const offsetZ = target.location.z - center.z
       if (offsetX ** 2 + offsetZ ** 2 > MAX_RADIUS ** 2 || offsetY < -DESTROY_DEPTH || offsetY > HIT_HEIGHT) continue
       inRangeCount++
-      if (target.applyDamage(DAMAGE, { cause: EntityDamageCause.magic, damagingEntity: player })) {
+      if (applyChargeDamage({ attacker: player, target, baseDamage: DAMAGE, cause: EntityDamageCause.magic })) {
         damagedCount++
       } else {
         console.warn(`[black_rod] ダメージが適用されませんでした: ${target.typeId}`)
