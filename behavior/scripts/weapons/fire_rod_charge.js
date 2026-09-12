@@ -6,7 +6,7 @@ import { setActionChargeCount } from '../action_bar.js'
 import { getChargeRequiredTicks } from '../skills/skill_data.js'
 
 const FIRE_ROD_ID = 'my:fire_rod'
-const CHARGED_MANA_COST = 3
+const CHARGED_MANA_COST = 2
 const chargeStartTicks = new Map()
 
 world.afterEvents.itemStartUse.subscribe(event => {

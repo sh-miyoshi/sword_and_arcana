@@ -11,7 +11,7 @@ import { setActionChargeCount } from '../action_bar.js'
 import { getAttackChargeRequiredTicks } from '../skills/skill_data.js'
 
 const FIRE_SWORD_ID = 'my:fire_sword'
-const CHARGED_MANA_COST = 1
+const CHARGED_MANA_COST = 2
 const CHARGED_ATTACK_DAMAGE = 8
 const FIRE_DURATION_SECONDS = 5
 const HIT_RANGE = 5

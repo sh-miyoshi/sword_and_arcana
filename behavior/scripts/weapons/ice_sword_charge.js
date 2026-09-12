@@ -13,7 +13,7 @@ import { setActionChargeCount } from '../action_bar.js'
 import { getAttackChargeRequiredTicks } from '../skills/skill_data.js'
 
 const ICE_SWORD_ID = 'my:ice_sword'
-const CHARGED_MANA_COST = 1
+const CHARGED_MANA_COST = 2
 const CHARGED_ATTACK_DAMAGE = 8
 const HIT_RANGE = 5
 const HIT_HALF_ANGLE = 70

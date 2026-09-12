@@ -8,7 +8,7 @@ import { useMana } from '../player/mana.js'
 import { getChargeRequiredTicks } from '../skills/skill_data.js'
 
 const ICE_ROD_ID = 'my:ice_rod'
-const CHARGED_MANA_COST = 3
+const CHARGED_MANA_COST = 2
 const ICE_BALL_LIFETIME_TICKS = 40
 
 const chargeStartTicks = new Map()
