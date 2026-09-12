@@ -17,7 +17,7 @@
       "textures": "textures/items/fire_sword"
     },
     "my:thunder_sword": {
-      "textures": "textures/items/ice_sword"
+      "textures": "textures/items/thunder_sword"
     },
     "my:skill_book": {
       "textures": "textures/items/skill_book"
