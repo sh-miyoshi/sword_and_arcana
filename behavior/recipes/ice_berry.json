@@ -1,0 +1,20 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "my:ice_berry_recipe"
+    },
+    "tags": ["crafting_table"],
+    "unlock": [
+      { "item": "my:mana_berry" }
+    ],
+    "ingredients": [
+      { "item": "my:mana_berry" },
+      { "item": "minecraft:packed_ice" }
+    ],
+    "result": {
+      "item": "my:ice_berry",
+      "count": 1
+    }
+  }
+}
