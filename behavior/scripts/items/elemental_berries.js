@@ -1,7 +1,7 @@
 import { EntityDamageCause, system, world } from '@minecraft/server'
 import { setActionElement } from '../action_bar.js'
 
-export const ELEMENTAL_BERRY_DURATION_TICKS = 180 * 20
+export const ELEMENTAL_BERRY_DURATION_TICKS = 120 * 20
 export const ELEMENTAL_BERRY_DAMAGE_MULTIPLIER = 1.5
 
 // Session-local effects expire in game ticks and are cleared on death/logout.
@@ -16,10 +16,7 @@ export function getElementalChargeDamage (player, element, baseDamage) {
 }
 
 system.beforeEvents.startup.subscribe(event => {
-  for (const [element, name] of [
-    ['fire', '炎力'],
-    ['ice', '氷力']
-  ]) {
+  for (const element of ['fire', 'ice']) {
     event.itemComponentRegistry.registerCustomComponent(`my:${element}_power`, {
       onConsume ({ source: player }) {
         if (player.typeId !== 'minecraft:player') return
