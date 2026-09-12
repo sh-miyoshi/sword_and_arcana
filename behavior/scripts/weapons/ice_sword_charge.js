@@ -8,7 +8,7 @@ import {
 import { freezeEntity, FREEZE_DURATION_TICKS } from '../effects/freeze.js'
 
 import { useMana } from '../player/mana.js'
-import { getElementalChargeDamage } from '../items/elemental_berries.js'
+import { applyChargeDamage } from '../combat/damage.js'
 import { setActionChargeCount } from '../action_bar.js'
 import { getAttackChargeRequiredTicks } from '../skills/skill_data.js'
 
@@ -163,9 +163,12 @@ function spawnIceSlash (player, forward) {
   const targets = getIceSlashTargets(player, forward)
 
   for (const target of targets) {
-    target.applyDamage(getElementalChargeDamage(player, 'ice', CHARGED_ATTACK_DAMAGE), {
-      cause: EntityDamageCause.entityAttack,
-      damagingEntity: player
+    applyChargeDamage({
+      attacker: player,
+      target,
+      baseDamage: CHARGED_ATTACK_DAMAGE,
+      element: 'ice',
+      cause: EntityDamageCause.entityAttack
     })
     if (target.isValid) {
       freezeEntity(target, FREEZE_DURATION_TICKS)

@@ -6,7 +6,7 @@ import {
 } from '@minecraft/server'
 
 import { useMana } from '../player/mana.js'
-import { getElementalChargeDamage } from '../items/elemental_berries.js'
+import { applyChargeDamage } from '../combat/damage.js'
 import { setActionChargeCount } from '../action_bar.js'
 import { getAttackChargeRequiredTicks } from '../skills/skill_data.js'
 
@@ -162,9 +162,12 @@ function spawnFireSlash (player, forward) {
   const targets = getFireSlashTargets(player, forward)
 
   for (const target of targets) {
-    target.applyDamage(getElementalChargeDamage(player, 'fire', CHARGED_ATTACK_DAMAGE), {
-      cause: EntityDamageCause.entityAttack,
-      damagingEntity: player
+    applyChargeDamage({
+      attacker: player,
+      target,
+      baseDamage: CHARGED_ATTACK_DAMAGE,
+      element: 'fire',
+      cause: EntityDamageCause.entityAttack
     })
     target.setOnFire(FIRE_DURATION_SECONDS, true)
 
