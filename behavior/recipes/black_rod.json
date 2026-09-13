@@ -13,13 +13,13 @@
       }
     ],
     "pattern": [
-      " N ",
-      " N ",
+      "OOO",
+      " O ",
       " R "
     ],
     "key": {
-      "N": {
-        "item": "minecraft:netherite_ingot"
+      "O": {
+        "item": "minecraft:obsidian"
       },
       "R": {
         "item": "my:rod"
