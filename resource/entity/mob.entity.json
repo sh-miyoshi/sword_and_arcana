@@ -1,0 +1,29 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "my:mob",
+
+      "materials": {
+        "default": "entity_alphatest"
+      },
+
+      "textures": {
+        "default": "textures/entity/mob"
+      },
+
+      "geometry": {
+        "default": "geometry.mob"
+      },
+
+      "render_controllers": [
+        "controller.render.default"
+      ],
+
+      "spawn_egg": {
+        "base_color": "#C9B18D",
+        "overlay_color": "#A83232"
+      }
+    }
+  }
+}
