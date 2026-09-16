@@ -16,6 +16,17 @@
         "default": "geometry.mob"
       },
 
+      "animations": {
+        "idle": "animation.mob.idle",
+        "walk": "animation.mob.walk"
+      },
+
+      "scripts": {
+        "animate": [
+          "walk"
+        ]
+      },
+
       "render_controllers": [
         "controller.render.default"
       ],
