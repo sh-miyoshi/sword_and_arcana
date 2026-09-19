@@ -12,7 +12,9 @@
         "width": 0.4,
         "height": 0.4
       },
-      "minecraft:physics": {},
+      "minecraft:physics": {
+        "has_gravity": false
+      },
       "minecraft:projectile": {
         "gravity": 0.0,
         "inertia": 1.0,

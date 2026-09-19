@@ -13,7 +13,9 @@
         "height": 0.3
       },
 
-      "minecraft:physics": {},
+      "minecraft:physics": {
+        "has_gravity": false
+      },
 
       "minecraft:projectile": {
         "gravity": 0.0,
