@@ -33,6 +33,9 @@
     },
     "my:ice_berry": {
       "textures": "textures/items/ice_berry"
+    },
+    "my:mana_shard": {
+      "textures": "textures/items/mana_shard"
     }
   }
 }
