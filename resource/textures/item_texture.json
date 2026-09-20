@@ -36,6 +36,9 @@
     },
     "my:mana_shard": {
       "textures": "textures/items/mana_shard"
+    },
+    "my:magic_shield": {
+      "textures": "textures/items/magic_shield"
     }
   }
 }
