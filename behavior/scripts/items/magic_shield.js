@@ -12,6 +12,7 @@ const MANA_COST = 1
 const activeShields = new Set()
 const reservedMana = new Map()
 const reflectedTargets = new Set()
+const equippedShieldSlots = new Map()
 
 system.beforeEvents.startup.subscribe(event => {
   event.itemComponentRegistry.registerCustomComponent('my:magic_shield', {
@@ -37,6 +38,21 @@ for (const signal of [
     }
   })
 }
+
+system.runInterval(() => {
+  for (const player of world.getAllPlayers()) {
+    const equippedSlots = getEquippedShieldSlots(player)
+    const previousSlots = equippedShieldSlots.get(player.id)
+
+    // Initialize silently so joining while holding the shield does not play
+    // an equip sound until it is actually equipped again.
+    if (previousSlots !== undefined && (equippedSlots & ~previousSlots) !== 0) {
+      player.playSound('armor.equip_iron', { volume: 0.8, pitch: 1.1 })
+    }
+
+    equippedShieldSlots.set(player.id, equippedSlots)
+  }
+})
 
 world.beforeEvents.entityHurt.subscribe(event => {
   const defender = event.hurtEntity
@@ -93,7 +109,27 @@ world.beforeEvents.entityHurt.subscribe(event => {
 world.afterEvents.playerLeave.subscribe(event => {
   activeShields.delete(event.playerId)
   reservedMana.delete(event.playerId)
+  equippedShieldSlots.delete(event.playerId)
 })
+
+function getEquippedShieldSlots (player) {
+  const equippable = player.getComponent('minecraft:equippable')
+  let slots = 0
+
+  if (
+    equippable?.getEquipment(EquipmentSlot.Mainhand)?.typeId === MAGIC_SHIELD_ID
+  ) {
+    slots |= 1
+  }
+
+  if (
+    equippable?.getEquipment(EquipmentSlot.Offhand)?.typeId === MAGIC_SHIELD_ID
+  ) {
+    slots |= 2
+  }
+
+  return slots
+}
 
 function getMagicShieldSlot (player) {
   const equippable = player.getComponent('minecraft:equippable')
