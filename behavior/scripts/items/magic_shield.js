@@ -8,36 +8,17 @@ import {
 import { getMana, useMana } from '../player/mana.js'
 
 const MAGIC_SHIELD_ID = 'my:magic_shield'
-const MANA_COST = 1
-const activeShields = new Set()
+const MANA_COST = 2
 const reservedMana = new Map()
 const reflectedTargets = new Set()
 const equippedShieldSlots = new Map()
 
 system.beforeEvents.startup.subscribe(event => {
   event.itemComponentRegistry.registerCustomComponent('my:magic_shield', {
-    // A completion callback makes the item continuously usable. Reflection is
-    // handled by entityHurt while the use button is held.
+    // A completion callback keeps the shield's use animation available.
     onCompleteUse () {}
   })
 })
-
-world.afterEvents.itemStartUse.subscribe(event => {
-  if (event.itemStack?.typeId === MAGIC_SHIELD_ID) {
-    activeShields.add(event.source.id)
-  }
-})
-
-for (const signal of [
-  world.afterEvents.itemReleaseUse,
-  world.afterEvents.itemStopUse
-]) {
-  signal.subscribe(event => {
-    if (event.itemStack?.typeId === MAGIC_SHIELD_ID) {
-      activeShields.delete(event.source.id)
-    }
-  })
-}
 
 system.runInterval(() => {
   for (const player of world.getAllPlayers()) {
@@ -61,8 +42,7 @@ world.beforeEvents.entityHurt.subscribe(event => {
     event.cancel ||
     event.damage <= 0 ||
     defender.typeId !== 'minecraft:player' ||
-    reflectedTargets.has(defender.id) ||
-    !activeShields.has(defender.id)
+    reflectedTargets.has(defender.id)
   ) {
     return
   }
@@ -107,7 +87,6 @@ world.beforeEvents.entityHurt.subscribe(event => {
 })
 
 world.afterEvents.playerLeave.subscribe(event => {
-  activeShields.delete(event.playerId)
   reservedMana.delete(event.playerId)
   equippedShieldSlots.delete(event.playerId)
 })
