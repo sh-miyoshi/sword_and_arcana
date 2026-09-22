@@ -1,0 +1,31 @@
+{
+  "format_version": "1.16.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.magic_circle",
+        "texture_width": 64,
+        "texture_height": 64,
+        "visible_bounds_width": 7,
+        "visible_bounds_height": 1,
+        "visible_bounds_offset": [0, 0, 0]
+      },
+      "bones": [
+        {
+          "name": "circle",
+          "pivot": [0, 0, 0],
+          "cubes": [
+            {
+              "origin": [-48, 0, -48],
+              "size": [96, 0.1, 96],
+              "uv": {
+                "up": { "uv": [0, 0], "uv_size": [64, 64] },
+                "down": { "uv": [0, 64], "uv_size": [64, -64] }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -4,6 +4,7 @@ import { setActionChargeCount } from '../action_bar.js'
 import { applyChargeDamage } from '../combat/damage.js'
 import { getMana, useMana } from '../player/mana.js'
 import { getChargeRequiredTicks } from '../skills/skill_data.js'
+import { applyChargeSpeedBuff } from '../effects/charge_circle.js'
 
 const BLACK_ROD_ID = 'my:black_rod'
 const MAX_TARGET_DISTANCE = 32
@@ -237,7 +238,8 @@ system.runInterval(() => {
         continue
       }
       const elapsed = system.currentTick - charge.startTick
-      const ratio = Math.min(elapsed / charge.requiredTicks, 1)
+      const requiredTicks = applyChargeSpeedBuff(player, charge.requiredTicks)
+      const ratio = Math.min(elapsed / requiredTicks, 1)
       setActionChargeCount(Math.floor(ratio * 10), player)
       updateSphere(player, charge, MIN_RADIUS + (MAX_RADIUS - MIN_RADIUS) * ratio)
       if (ratio >= 1) {
