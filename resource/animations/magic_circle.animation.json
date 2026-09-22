@@ -1,0 +1,13 @@
+{
+  "format_version": "1.10.0",
+  "animations": {
+    "animation.magic_circle.spin": {
+      "loop": true,
+      "bones": {
+        "circle": {
+          "rotation": [0, "query.anim_time * 30", 0]
+        }
+      }
+    }
+  }
+}

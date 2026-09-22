@@ -9,6 +9,7 @@ import { useMana } from '../player/mana.js'
 import { applyChargeDamage } from '../combat/damage.js'
 import { setActionChargeCount } from '../action_bar.js'
 import { getAttackChargeRequiredTicks } from '../skills/skill_data.js'
+import { applyChargeSpeedBuff } from '../effects/charge_circle.js'
 
 const THUNDER_SWORD_ID = 'my:thunder_sword'
 const CHARGED_MANA_COST = 2
@@ -91,7 +92,8 @@ function finishCharge (player) {
   cancelCharge(player)
   if (
     !isChargeValid(player, charge) ||
-    system.currentTick - charge.startTick < charge.requiredTicks
+    system.currentTick - charge.startTick <
+      applyChargeSpeedBuff(player, charge.requiredTicks)
   )
     return
   if (!useMana(player, CHARGED_MANA_COST)) {
@@ -236,8 +238,9 @@ system.runInterval(() => {
       cancelCharge(player)
       continue
     }
+    const requiredTicks = applyChargeSpeedBuff(player, charge.requiredTicks)
     const ratio = Math.min(
-      (system.currentTick - charge.startTick) / charge.requiredTicks,
+      (system.currentTick - charge.startTick) / requiredTicks,
       1
     )
     setActionChargeCount(Math.floor(ratio * 10), player)

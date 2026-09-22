@@ -11,6 +11,7 @@ import { useMana } from '../player/mana.js'
 import { applyChargeDamage } from '../combat/damage.js'
 import { setActionChargeCount } from '../action_bar.js'
 import { getAttackChargeRequiredTicks } from '../skills/skill_data.js'
+import { applyChargeSpeedBuff } from '../effects/charge_circle.js'
 
 const ICE_SWORD_ID = 'my:ice_sword'
 const CHARGED_MANA_COST = 2
@@ -61,7 +62,10 @@ function finishCharge (player) {
   }
 
   const chargedTicks = system.currentTick - startTick
-  const chargeRequiredTicks = getAttackChargeRequiredTicks(player)
+  const chargeRequiredTicks = applyChargeSpeedBuff(
+    player,
+    getAttackChargeRequiredTicks(player)
+  )
 
   if (chargedTicks < chargeRequiredTicks) {
     return
@@ -95,7 +99,10 @@ system.runInterval(() => {
     }
 
     const chargedTicks = system.currentTick - startTick
-    const chargeRequiredTicks = getAttackChargeRequiredTicks(player)
+    const chargeRequiredTicks = applyChargeSpeedBuff(
+      player,
+      getAttackChargeRequiredTicks(player)
+    )
     const ratio = Math.min(chargedTicks / chargeRequiredTicks, 1)
     const filled = Math.floor(ratio * 10)
     setActionChargeCount(filled, player)

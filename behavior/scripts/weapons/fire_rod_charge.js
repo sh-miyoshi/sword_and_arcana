@@ -4,6 +4,7 @@ import { shootFireBall } from '../projectiles/fire_ball.js'
 import { useMana } from '../player/mana.js'
 import { setActionChargeCount } from '../action_bar.js'
 import { getChargeRequiredTicks } from '../skills/skill_data.js'
+import { applyChargeSpeedBuff } from '../effects/charge_circle.js'
 
 const FIRE_ROD_ID = 'my:fire_rod'
 const CHARGED_MANA_COST = 2
@@ -37,7 +38,10 @@ world.afterEvents.itemReleaseUse.subscribe(event => {
   }
 
   const chargedTicks = system.currentTick - startTick
-  const chargeRequiredTicks = getChargeRequiredTicks(player)
+  const chargeRequiredTicks = applyChargeSpeedBuff(
+    player,
+    getChargeRequiredTicks(player)
+  )
 
   if (chargedTicks < chargeRequiredTicks) {
     return
@@ -78,7 +82,10 @@ system.runInterval(() => {
     }
 
     const chargedTicks = system.currentTick - startTick
-    const chargeRequiredTicks = getChargeRequiredTicks(player)
+    const chargeRequiredTicks = applyChargeSpeedBuff(
+      player,
+      getChargeRequiredTicks(player)
+    )
     const ratio = Math.min(chargedTicks / chargeRequiredTicks, 1)
     const filled = Math.floor(ratio * 10)
     setActionChargeCount(filled, player)

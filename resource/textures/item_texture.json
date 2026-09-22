@@ -36,6 +36,9 @@
     },
     "my:mana_shard": {
       "textures": "textures/items/mana_shard"
+    },
+    "my:mana_bottle": {
+      "textures": "textures/items/mana_bottle"
     }
   }
 }
