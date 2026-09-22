@@ -41,6 +41,7 @@ world.beforeEvents.entityHurt.subscribe(event => {
   if (
     event.cancel ||
     event.damage <= 0 ||
+    event.damageSource.cause === EntityDamageCause.fireTick ||
     defender.typeId !== 'minecraft:player' ||
     reflectedTargets.has(defender.id)
   ) {
@@ -50,9 +51,11 @@ world.beforeEvents.entityHurt.subscribe(event => {
   const slot = getMagicShieldSlot(defender)
   const source = getAttackSource(event.damageSource)
   const attacker = event.damageSource.damagingEntity
+  const extinguishOnBlock =
+    event.damageSource.cause === EntityDamageCause.projectile
 
-  if (!slot || !source || !attacker || attacker.id === defender.id) return
-  if (!isInFront(defender, source.location)) return
+  if (!slot || attacker?.id === defender.id) return
+  if (source?.isValid && !isInFront(defender, source.location)) return
 
   const reserved = reservedMana.get(defender.id) ?? 0
   if (getMana(defender) - reserved < MANA_COST) return
@@ -64,24 +67,27 @@ world.beforeEvents.entityHurt.subscribe(event => {
   system.run(() => {
     releaseReservedMana(defender.id)
 
-    if (!defender.isValid || !attacker.isValid || !useMana(defender, MANA_COST))
-      return
+    if (!defender.isValid || !useMana(defender, MANA_COST)) return
 
     damageShield(defender, slot)
+    if (extinguishOnBlock) defender.extinguishFire(false)
+
     defender.dimension.spawnParticle(
       'minecraft:totem_particle',
       defender.location
     )
     defender.playSound('random.orb', { pitch: 1.4, volume: 0.8 })
 
-    reflectedTargets.add(attacker.id)
-    try {
-      attacker.applyDamage(reflectedDamage, {
-        cause: EntityDamageCause.magic,
-        damagingEntity: defender
-      })
-    } finally {
-      reflectedTargets.delete(attacker.id)
+    if (attacker?.isValid) {
+      reflectedTargets.add(attacker.id)
+      try {
+        attacker.applyDamage(reflectedDamage, {
+          cause: EntityDamageCause.magic,
+          damagingEntity: defender
+        })
+      } finally {
+        reflectedTargets.delete(attacker.id)
+      }
     }
   })
 })
@@ -127,7 +133,9 @@ function getMagicShieldSlot (player) {
 }
 
 function getAttackSource (damageSource) {
-  return damageSource.damagingProjectile ?? damageSource.damagingEntity
+  // Use the shooter's position for projectiles because a projectile can
+  // already be inside or behind the player when the hurt event is emitted.
+  return damageSource.damagingEntity ?? damageSource.damagingProjectile
 }
 
 function isInFront (player, sourceLocation) {
