@@ -19,10 +19,12 @@
         "gravity": 0.0,
         "inertia": 1.0,
         "multiple_targets": false,
+        "on_fire_time": 5,
         "on_hit": {
           "impact_damage": {
             "damage": 6,
-            "knockback": true
+            "knockback": true,
+            "catch_fire": true
           },
           "remove_on_hit": {}
         }
